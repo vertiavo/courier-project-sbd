@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+
+        <property name = "hibernate.dialect">
+            org.hibernate.dialect.Oracle10gDialect
+        </property>
+
+        <property name = "hibernate.connection.driver_class">
+            oracle.jdbc.driver.OracleDriver
+        </property>
+
+        <!-- Assume test is the database name -->
+
+        <property name = "hibernate.connection.url">
+            jdbc:oracle://localhost/test
+        </property>
+
+        <property name = "hibernate.connection.username">
+            <!--username-->
+        </property>
+
+        <property name = "hibernate.connection.password">
+            <!--password-->
+        </property>
+
+        <mapping class="com.project.model.Offer"/>
+        <mapping class="com.project.model.Sender"/>
+        <mapping class="com.project.model.Payment"/>
+        <mapping class="com.project.model.Recipient"/>
+        <mapping class="com.project.model.PackageDimension"/>
+        <mapping class="com.project.model.PackageInfo"/>
+        <mapping class="com.project.model.Car"/>
+        <mapping class="com.project.model.Courier"/>
+        <mapping class="com.project.model.CourierDetails"/>
+        <mapping class="com.project.model.OrderInfo"/>
+
+    </session-factory>
+</hibernate-configuration>
