@@ -3,35 +3,36 @@ package com.project.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "CAR")
-public class Car {
+public class Car implements Serializable {
 
     @Id
-    @Column(name = "id_car")
-//    @GeneratedValue
+    @Column(name = "IDCAR")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idCar;
 
-    @Column(name = "brand")
+    @Column(name = "BRAND")
     private String brand;
 
-    @Column(name = "model")
+    @Column(name = "MODEL")
     private String model;
 
-    @Column(name = "load")
+    @Column(name = "LOAD")
     private double load;
 
-    @Column(name = "capacity")
+    @Column(name = "CAPACITY")
     private double capacity;
 
     public Car() {
     }
 
-    public Car(int idCar, String brand, String model, double load, double capacity) {
-        this.idCar = idCar;
+    public Car(String brand, String model, double load, double capacity) {
         this.brand = brand;
         this.model = model;
         this.load = load;

@@ -1,5 +1,8 @@
 package com.project.common;
 
+import com.project.dao.CarDao;
+import com.project.dao.jpa.CarJpaDao;
+import com.project.model.Car;
 import com.project.persistence.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Metamodel;
@@ -16,19 +19,14 @@ public class Main {
 
     public static void main(final String[] args) throws Exception {
 
-//        SessionFactory sf = HibernateUtil.getSessionFactory();
-//
-//        try (Session session = sf.openSession()) {
-//            System.out.println("querying all the managed entities...");
-//            final Metamodel metamodel = session.getSessionFactory().getMetamodel();
-//            for (EntityType<?> entityType : metamodel.getEntities()) {
-//                final String entityName = entityType.getName();
-//                final Query query = session.createQuery("from " + entityName);
-//                System.out.println("executing: " + query.getQueryString());
-//                for (Object o : query.list()) {
-//                    System.out.println("  " + o);
-//                }
-//            }
-//        }
+        SessionFactory sf = HibernateUtil.getSessionFactory();
+
+        try (Session session = sf.openSession()) {
+
+            CarDao carDao = new CarJpaDao();
+            Car car1 = new Car("Fiat", "Multipla", 50d, 15d);
+            carDao.save(car1);
+
+        }
     }
 }

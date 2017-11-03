@@ -3,49 +3,50 @@ package com.project.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.sql.Date;
 
 @Entity
-@Table(name = "ORDER_INFO")
-public class OrderInfo {
+@Table(name = "ORDERINFO")
+public class OrderInfo implements Serializable {
 
     @Id
-    @Column(name = "id_order")
-//    @GeneratedValue
+    @Column(name = "IDORDER")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idOrder;
 
-    @OneToMany
-    @Column(name = "id_sender")
+    @ManyToOne
+    @Column(name = "IDSENDER")
     private Sender idSender;
 
-    @OneToMany
-    @Column(name = "id_recipient")
+    @ManyToOne
+    @Column(name = "IDRECIPIENT")
     private Recipient idRecipient;
 
-    @OneToMany
-    @Column(name = "id_courier")
+    @ManyToOne
+    @Column(name = "IDCOURIER")
     private Courier idCourier;
 
     @ManyToOne
-    @Column(name = "id_package")
+    @Column(name = "IDPACKAGE")
     private PackageInfo idPackage;
 
-    @OneToMany
-    @Column(name = "id_payment")
+    @ManyToOne
+    @Column(name = "IDPAYMENT")
     private Payment idPayment;
 
-    @Column(name = "order_date")
+    @Column(name = "ORDERDATE")
     private Date orderDate;
 
     public OrderInfo() {
     }
 
-    public OrderInfo(int idOrder, Sender idSender, Recipient idRecipient, Courier idCourier, PackageInfo idPackage, Payment idPayment, Date orderDate) {
-        this.idOrder = idOrder;
+    public OrderInfo(Sender idSender, Recipient idRecipient, Courier idCourier, PackageInfo idPackage, Payment idPayment, Date orderDate) {
         this.idSender = idSender;
         this.idRecipient = idRecipient;
         this.idCourier = idCourier;

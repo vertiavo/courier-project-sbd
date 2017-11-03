@@ -3,31 +3,32 @@ package com.project.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
-@Table(name = "PACKAGE_INFO")
-public class PackageInfo {
+@Table(name = "PACKAGEINFO")
+public class PackageInfo implements Serializable {
 
     @Id
-    @Column(name = "id_package")
-//    @GeneratedValue
+    @Column(name = "IDPACKAGE")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPackage;
 
-    @Column(name = "vulnerability")
+    @Column(name = "VULNERABILITY")
     private String vulnerability;
 
     @ManyToOne
-    @Column(name = "category")
+    @Column(name = "CATEGORY")
     private PackageDimension category;
 
     public PackageInfo() {
     }
 
-    public PackageInfo(int idPackage, String vulnerability, PackageDimension category) {
-        this.idPackage = idPackage;
+    public PackageInfo(String vulnerability, PackageDimension category) {
         this.vulnerability = vulnerability;
         this.category = category;
     }

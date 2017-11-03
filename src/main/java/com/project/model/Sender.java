@@ -3,40 +3,41 @@ package com.project.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "SENDER")
-public class Sender {
+public class Sender implements Serializable {
 
     @Id
-    @Column(name = "id_sender")
-//    @GeneratedValue
+    @Column(name = "IDSENDER")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idSender;
 
-    @Column(name = "address")
+    @Column(name = "ADDRESS")
     private String address;
 
     @ManyToOne
-    @Column(name = "offer_type")
+    @Column(name = "OFFERTYPE")
     private Offer offerType;
 
-    @Column(name = "name")
+    @Column(name = "NAME")
     private String name;
 
-    @Column(name = "surname")
+    @Column(name = "SURNAME")
     private String surname;
 
-    @Column(name = "nip")
+    @Column(name = "NIP")
     private int nip;
 
     public Sender() {
     }
 
-    public Sender(int idSender, String address, Offer offerType, String name, String surname, int nip) {
-        this.idSender = idSender;
+    public Sender(String address, Offer offerType, String name, String surname, int nip) {
         this.address = address;
         this.offerType = offerType;
         this.name = name;

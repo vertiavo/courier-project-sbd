@@ -3,33 +3,40 @@ package com.project.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "COURIER")
-public class Courier {
+public class Courier implements Serializable {
 
     @Id
-    @Column(name = "id_courier")
-//    @GeneratedValue
+    @Column(name = "IDCOURIER")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idCourier;
 
-    @OneToOne
-    @Column(name = "id_car")
-    private Car idCar;
+    @Column(name = "NAME")
+    private String name;
 
-    @Column(name = "area")
-    private String area;
+    @Column(name = "SURNAME")
+    private String surname;
+
+    @Column(name = "ADDRESS")
+    private String address;
+
+    @Column(name = "PHONENUMBER")
+    private int phoneNumber;
 
     public Courier() {
     }
 
-    public Courier(int idCourier, Car idCar, String area) {
-        this.idCourier = idCourier;
-        this.idCar = idCar;
-        this.area = area;
+    public Courier(String name, String surname, String address, int phoneNumber) {
+        this.name = name;
+        this.surname = surname;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
     }
 
     public int getIdCourier() {
@@ -40,19 +47,35 @@ public class Courier {
         this.idCourier = idCourier;
     }
 
-    public Car getIdCar() {
-        return idCar;
+    public String getName() {
+        return name;
     }
 
-    public void setIdCar(Car idCar) {
-        this.idCar = idCar;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getArea() {
-        return area;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setArea(String area) {
-        this.area = area;
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public int getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

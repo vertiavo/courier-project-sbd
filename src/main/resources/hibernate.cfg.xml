@@ -16,7 +16,7 @@
         <!-- Assume test is the database name -->
 
         <property name = "hibernate.connection.url">
-            jdbc:oracle://localhost/test
+            jdbc:oracle:thin:@212.33.90.213:1521:XE
         </property>
 
         <property name = "hibernate.connection.username">
@@ -34,8 +34,9 @@
         <mapping class="com.project.model.PackageDimension"/>
         <mapping class="com.project.model.PackageInfo"/>
         <mapping class="com.project.model.Car"/>
+        <mapping class="com.project.model.Area"/>
         <mapping class="com.project.model.Courier"/>
-        <mapping class="com.project.model.CourierDetails"/>
+        <mapping class="com.project.model.CourierCarArea"/>
         <mapping class="com.project.model.OrderInfo"/>
 
     </session-factory>

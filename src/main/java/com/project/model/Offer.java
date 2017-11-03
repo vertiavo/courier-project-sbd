@@ -4,16 +4,17 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "OFFER")
-public class Offer {
+public class Offer implements Serializable {
 
     @Id
-    @Column(name = "offer_type")
+    @Column(name = "OFFERTYPE")
     private String offerType;
 
-    @Column(name = "discount")
+    @Column(name = "DISCOUNT")
     private int discount;
 
     public Offer() {

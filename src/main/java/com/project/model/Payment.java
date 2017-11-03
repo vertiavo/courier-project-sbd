@@ -3,29 +3,30 @@ package com.project.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "PAYMENT")
-public class Payment {
+public class Payment implements Serializable {
 
     @Id
-    @Column(name = "id_payment")
-//    @GeneratedValue
+    @Column(name = "IDPAYMENT")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPayment;
 
-    @Column(name = "price")
+    @Column(name = "PRICE")
     private double price;
 
-    @Column(name = "type")
+    @Column(name = "TYPE")
     private String type;
 
     public Payment() {
     }
 
-    public Payment(int idPayment, double price, String type) {
-        this.idPayment = idPayment;
+    public Payment(double price, String type) {
         this.price = price;
         this.type = type;
     }

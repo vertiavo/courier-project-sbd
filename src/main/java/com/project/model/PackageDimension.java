@@ -4,19 +4,20 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
-@Table(name = "PACKAGE_DIMENSION")
-public class PackageDimension {
+@Table(name = "PACKAGEDIMENSION")
+public class PackageDimension implements Serializable {
 
     @Id
-    @Column(name = "category")
+    @Column(name = "CATEGORY")
     private String category;
 
-    @Column(name = "max_weight")
+    @Column(name = "MAXWEIGHT")
     private double maxWeight;
 
-    @Column(name = "max_volume")
+    @Column(name = "MAXVOLUME")
     private double maxVolume;
 
     public PackageDimension() {
