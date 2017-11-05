@@ -2,14 +2,16 @@ package com.project.model;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 @Embeddable
 public class CourierCarAreaId implements Serializable {
 
     @OneToOne
+    @JoinColumn(name = "IDCOURIER", referencedColumnName = "IDCOURIER")
     private Courier idCourier;
 
     @Column(name = "BEGINDATE")

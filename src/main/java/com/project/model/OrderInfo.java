@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -23,18 +24,23 @@ public class OrderInfo implements Serializable {
     private Integer idOrder;
 
     @ManyToOne
+    @JoinColumn(name = "IDSENDER", referencedColumnName = "IDSENDER")
     private Sender idSender;
 
     @ManyToOne
+    @JoinColumn(name = "IDRECIPIENT", referencedColumnName = "IDRECIPIENT")
     private Recipient idRecipient;
 
     @ManyToOne
+    @JoinColumn(name = "IDCOURIER", referencedColumnName = "IDCOURIER")
     private Courier idCourier;
 
     @ManyToOne
+    @JoinColumn(name = "IDPACKAGE", referencedColumnName = "IDPACKAGE")
     private PackageInfo idPackage;
 
     @ManyToOne
+    @JoinColumn(name = "IDPAYMENT", referencedColumnName = "IDPAYMENT")
     private Payment idPayment;
 
     @Column(name = "ORDERDATE")

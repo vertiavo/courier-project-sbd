@@ -3,10 +3,11 @@ package com.project.model;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Table(name = "COURIERCARAREA")
@@ -16,9 +17,11 @@ public class CourierCarArea implements Serializable {
     private CourierCarAreaId idCourierCarArea;
 
     @ManyToOne
+    @JoinColumn(name = "IDCAR", referencedColumnName = "IDCAR")
     private Car idCar;
 
     @ManyToOne
+    @JoinColumn(name = "IDAREA", referencedColumnName = "IDAREA")
     private Area idArea;
 
     @Column(name = "ENDDATE")
