@@ -16,13 +16,12 @@ public class PackageInfo implements Serializable {
     @Id
     @Column(name = "IDPACKAGE")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idPackage;
+    private Integer idPackage;
 
     @Column(name = "VULNERABILITY")
     private String vulnerability;
 
     @ManyToOne
-    @Column(name = "CATEGORY")
     private PackageDimension category;
 
     public PackageInfo() {

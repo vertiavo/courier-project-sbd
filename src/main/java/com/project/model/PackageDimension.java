@@ -15,10 +15,10 @@ public class PackageDimension implements Serializable {
     private String category;
 
     @Column(name = "MAXWEIGHT")
-    private double maxWeight;
+    private Double maxWeight;
 
     @Column(name = "MAXVOLUME")
-    private double maxVolume;
+    private Double maxVolume;
 
     public PackageDimension() {
     }

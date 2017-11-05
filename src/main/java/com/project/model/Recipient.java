@@ -15,7 +15,7 @@ public class Recipient implements Serializable {
     @Id
     @Column(name = "IDRECIPIENT")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idRecipient;
+    private Integer idRecipient;
 
     @Column(name = "NAME")
     private String name;
@@ -27,7 +27,7 @@ public class Recipient implements Serializable {
     private String address;
 
     @Column(name = "PHONENUMBER")
-    private int phoneNumber;
+    private Integer phoneNumber;
 
     public Recipient() {
     }

@@ -18,26 +18,21 @@ public class OrderInfo implements Serializable {
     @Id
     @Column(name = "IDORDER")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idOrder;
+    private Integer idOrder;
 
     @ManyToOne
-    @Column(name = "IDSENDER")
     private Sender idSender;
 
     @ManyToOne
-    @Column(name = "IDRECIPIENT")
     private Recipient idRecipient;
 
     @ManyToOne
-    @Column(name = "IDCOURIER")
     private Courier idCourier;
 
     @ManyToOne
-    @Column(name = "IDPACKAGE")
     private PackageInfo idPackage;
 
     @ManyToOne
-    @Column(name = "IDPAYMENT")
     private Payment idPayment;
 
     @Column(name = "ORDERDATE")

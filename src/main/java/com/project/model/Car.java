@@ -15,7 +15,7 @@ public class Car implements Serializable {
     @Id
     @Column(name = "IDCAR")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idCar;
+    private Integer idCar;
 
     @Column(name = "BRAND")
     private String brand;

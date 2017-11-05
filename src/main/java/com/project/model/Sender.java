@@ -2,6 +2,7 @@ package com.project.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,13 +17,12 @@ public class Sender implements Serializable {
     @Id
     @Column(name = "IDSENDER")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idSender;
+    private Integer idSender;
 
     @Column(name = "ADDRESS")
     private String address;
 
     @ManyToOne
-    @Column(name = "OFFERTYPE")
     private Offer offerType;
 
     @Column(name = "NAME")
@@ -32,7 +32,7 @@ public class Sender implements Serializable {
     private String surname;
 
     @Column(name = "NIP")
-    private int nip;
+    private Integer nip;
 
     public Sender() {
     }

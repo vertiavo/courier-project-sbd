@@ -15,7 +15,7 @@ public class Offer implements Serializable {
     private String offerType;
 
     @Column(name = "DISCOUNT")
-    private int discount;
+    private Integer discount;
 
     public Offer() {
     }

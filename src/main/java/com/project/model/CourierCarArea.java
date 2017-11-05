@@ -16,11 +16,10 @@ public class CourierCarArea implements Serializable {
     private CourierCarAreaId idCourierCarArea;
 
     @ManyToOne
-    @Column(name = "IDCAR")
     private Car idCar;
 
-    @Column(name = "IDAREA")
-    private int idArea;
+    @ManyToOne
+    private Area idArea;
 
     @Column(name = "ENDDATE")
     private Date endDate;
@@ -28,7 +27,7 @@ public class CourierCarArea implements Serializable {
     public CourierCarArea() {
     }
 
-    public CourierCarArea(CourierCarAreaId idCourierCarArea, Car idCar, int idArea, Date endDate) {
+    public CourierCarArea(CourierCarAreaId idCourierCarArea, Car idCar, Area idArea, Date endDate) {
         this.idCourierCarArea = idCourierCarArea;
         this.idCar = idCar;
         this.idArea = idArea;
@@ -51,11 +50,11 @@ public class CourierCarArea implements Serializable {
         this.idCar = idCar;
     }
 
-    public int getIdArea() {
+    public Area getIdArea() {
         return idArea;
     }
 
-    public void setIdArea(int idArea) {
+    public void setIdArea(Area idArea) {
         this.idArea = idArea;
     }
 

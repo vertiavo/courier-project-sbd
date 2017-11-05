@@ -15,7 +15,7 @@ public class Area implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IDAREA")
-    private int idArea;
+    private Integer idArea;
 
     @Column(name = "NAME")
     private String name;

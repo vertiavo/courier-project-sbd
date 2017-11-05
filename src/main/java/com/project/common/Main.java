@@ -19,14 +19,13 @@ public class Main {
 
     public static void main(final String[] args) throws Exception {
 
-        SessionFactory sf = HibernateUtil.getSessionFactory();
+        CarDao carDao = new CarJpaDao();
+        Car car1 = new Car();
+        car1.setBrand("Fiat");
+        car1.setBrand("Multipla");
+        car1.setLoad(50d);
+        car1.setCapacity(15d);
+        carDao.save(car1);
 
-        try (Session session = sf.openSession()) {
-
-            CarDao carDao = new CarJpaDao();
-            Car car1 = new Car("Fiat", "Multipla", 50d, 15d);
-            carDao.save(car1);
-
-        }
     }
 }

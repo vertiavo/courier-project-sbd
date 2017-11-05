@@ -15,7 +15,7 @@ public class Courier implements Serializable {
     @Id
     @Column(name = "IDCOURIER")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idCourier;
+    private Integer idCourier;
 
     @Column(name = "NAME")
     private String name;
@@ -27,7 +27,7 @@ public class Courier implements Serializable {
     private String address;
 
     @Column(name = "PHONENUMBER")
-    private int phoneNumber;
+    private Integer phoneNumber;
 
     public Courier() {
     }

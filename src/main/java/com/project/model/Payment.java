@@ -15,10 +15,10 @@ public class Payment implements Serializable {
     @Id
     @Column(name = "IDPAYMENT")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idPayment;
+    private Integer idPayment;
 
     @Column(name = "PRICE")
-    private double price;
+    private Double price;
 
     @Column(name = "TYPE")
     private String type;
