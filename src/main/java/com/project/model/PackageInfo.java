@@ -6,16 +6,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "PACKAGEINFO")
+@SequenceGenerator(name = "packageInfo_id_seq", allocationSize = 1, sequenceName = "packageInfo_id_seq")
 public class PackageInfo implements Serializable {
 
     @Id
     @Column(name = "IDPACKAGE")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "packageInfo_id_seq")
     private Integer idPackage;
 
     @Column(name = "VULNERABILITY")
@@ -32,11 +34,11 @@ public class PackageInfo implements Serializable {
         this.category = category;
     }
 
-    public int getIdPackage() {
+    public Integer getIdPackage() {
         return idPackage;
     }
 
-    public void setIdPackage(int idPackage) {
+    public void setIdPackage(Integer idPackage) {
         this.idPackage = idPackage;
     }
 

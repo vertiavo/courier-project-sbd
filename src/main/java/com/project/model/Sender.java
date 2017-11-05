@@ -7,16 +7,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "SENDER")
+@SequenceGenerator(name = "sender_id_seq", allocationSize = 1, sequenceName = "sender_id_seq")
 public class Sender implements Serializable {
 
     @Id
     @Column(name = "IDSENDER")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "sender_id_seq")
     private Integer idSender;
 
     @Column(name = "ADDRESS")
@@ -37,7 +39,7 @@ public class Sender implements Serializable {
     public Sender() {
     }
 
-    public Sender(String address, Offer offerType, String name, String surname, int nip) {
+    public Sender(String address, Offer offerType, String name, String surname, Integer nip) {
         this.address = address;
         this.offerType = offerType;
         this.name = name;
@@ -45,11 +47,11 @@ public class Sender implements Serializable {
         this.nip = nip;
     }
 
-    public int getIdSender() {
+    public Integer getIdSender() {
         return idSender;
     }
 
-    public void setIdSender(int idSender) {
+    public void setIdSender(Integer idSender) {
         this.idSender = idSender;
     }
 
@@ -85,11 +87,11 @@ public class Sender implements Serializable {
         this.surname = surname;
     }
 
-    public int getNip() {
+    public Integer getNip() {
         return nip;
     }
 
-    public void setNip(int nip) {
+    public void setNip(Integer nip) {
         this.nip = nip;
     }
 }

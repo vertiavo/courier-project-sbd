@@ -7,17 +7,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.sql.Date;
 
 @Entity
 @Table(name = "ORDERINFO")
+@SequenceGenerator(name = "orderInfo_id_seq", allocationSize = 1, sequenceName = "orderInfo_id_seq")
 public class OrderInfo implements Serializable {
 
     @Id
     @Column(name = "IDORDER")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "orderInfo_id_seq")
     private Integer idOrder;
 
     @ManyToOne
@@ -50,11 +52,11 @@ public class OrderInfo implements Serializable {
         this.orderDate = orderDate;
     }
 
-    public int getIdOrder() {
+    public Integer getIdOrder() {
         return idOrder;
     }
 
-    public void setIdOrder(int idOrder) {
+    public void setIdOrder(Integer idOrder) {
         this.idOrder = idOrder;
     }
 

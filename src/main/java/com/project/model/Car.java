@@ -5,16 +5,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "CAR")
+@SequenceGenerator(name = "car_id_seq", allocationSize = 1, sequenceName = "car_id_seq")
 public class Car implements Serializable {
 
     @Id
     @Column(name = "IDCAR")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "car_id_seq")
     private Integer idCar;
 
     @Column(name = "BRAND")
@@ -24,15 +26,15 @@ public class Car implements Serializable {
     private String model;
 
     @Column(name = "LOAD")
-    private double load;
+    private Double load;
 
     @Column(name = "CAPACITY")
-    private double capacity;
+    private Double capacity;
 
     public Car() {
     }
 
-    public Car(String brand, String model, double load, double capacity) {
+    public Car(String brand, String model, Double load, Double capacity) {
         this.brand = brand;
         this.model = model;
         this.load = load;
@@ -63,19 +65,19 @@ public class Car implements Serializable {
         this.model = model;
     }
 
-    public double getLoad() {
+    public Double getLoad() {
         return load;
     }
 
-    public void setLoad(double load) {
+    public void setLoad(Double load) {
         this.load = load;
     }
 
-    public double getCapacity() {
+    public Double getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(double capacity) {
+    public void setCapacity(Double capacity) {
         this.capacity = capacity;
     }
 }

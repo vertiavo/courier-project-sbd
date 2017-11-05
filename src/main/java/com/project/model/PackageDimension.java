@@ -23,7 +23,7 @@ public class PackageDimension implements Serializable {
     public PackageDimension() {
     }
 
-    public PackageDimension(String category, double maxWeight, double maxVolume) {
+    public PackageDimension(String category, Double maxWeight, Double maxVolume) {
         this.category = category;
         this.maxWeight = maxWeight;
         this.maxVolume = maxVolume;
@@ -37,19 +37,19 @@ public class PackageDimension implements Serializable {
         this.category = category;
     }
 
-    public double getMaxWeight() {
+    public Double getMaxWeight() {
         return maxWeight;
     }
 
-    public void setMaxWeight(double maxWeight) {
+    public void setMaxWeight(Double maxWeight) {
         this.maxWeight = maxWeight;
     }
 
-    public double getMaxVolume() {
+    public Double getMaxVolume() {
         return maxVolume;
     }
 
-    public void setMaxVolume(double maxVolume) {
+    public void setMaxVolume(Double maxVolume) {
         this.maxVolume = maxVolume;
     }
 }

@@ -5,16 +5,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "PAYMENT")
+@SequenceGenerator(name = "payment_id_seq", allocationSize = 1, sequenceName = "payment_id_seq")
 public class Payment implements Serializable {
 
     @Id
     @Column(name = "IDPAYMENT")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "payment_id_seq")
     private Integer idPayment;
 
     @Column(name = "PRICE")
@@ -26,24 +28,24 @@ public class Payment implements Serializable {
     public Payment() {
     }
 
-    public Payment(double price, String type) {
+    public Payment(Double price, String type) {
         this.price = price;
         this.type = type;
     }
 
-    public int getIdPayment() {
+    public Integer getIdPayment() {
         return idPayment;
     }
 
-    public void setIdPayment(int idPayment) {
+    public void setIdPayment(Integer idPayment) {
         this.idPayment = idPayment;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

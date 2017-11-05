@@ -5,16 +5,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "RECIPIENT")
+@SequenceGenerator(name = "recipient_id_seq", allocationSize = 1, sequenceName = "recipient_id_seq")
 public class Recipient implements Serializable {
 
     @Id
     @Column(name = "IDRECIPIENT")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "recipient_id_seq")
     private Integer idRecipient;
 
     @Column(name = "NAME")
@@ -32,18 +34,18 @@ public class Recipient implements Serializable {
     public Recipient() {
     }
 
-    public Recipient(String name, String surname, String address, int phoneNumber) {
+    public Recipient(String name, String surname, String address, Integer phoneNumber) {
         this.name = name;
         this.surname = surname;
         this.address = address;
         this.phoneNumber = phoneNumber;
     }
 
-    public int getIdRecipient() {
+    public Integer getIdRecipient() {
         return idRecipient;
     }
 
-    public void setIdRecipient(int idRecipient) {
+    public void setIdRecipient(Integer idRecipient) {
         this.idRecipient = idRecipient;
     }
 
@@ -71,11 +73,11 @@ public class Recipient implements Serializable {
         this.address = address;
     }
 
-    public int getPhoneNumber() {
+    public Integer getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(Integer phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 }

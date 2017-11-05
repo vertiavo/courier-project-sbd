@@ -5,16 +5,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "AREA")
+@SequenceGenerator(name = "area_id_seq", allocationSize = 1, sequenceName = "area_id_seq")
 public class Area implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IDAREA")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "area_id_seq")
     private Integer idArea;
 
     @Column(name = "NAME")
@@ -27,11 +29,11 @@ public class Area implements Serializable {
         this.name = name;
     }
 
-    public int getIdArea() {
+    public Integer getIdArea() {
         return idArea;
     }
 
-    public void setIdArea(int idArea) {
+    public void setIdArea(Integer idArea) {
         this.idArea = idArea;
     }
 

@@ -20,7 +20,7 @@ public class Offer implements Serializable {
     public Offer() {
     }
 
-    public Offer(String offerType, int discount) {
+    public Offer(String offerType, Integer discount) {
         this.offerType = offerType;
         this.discount = discount;
     }
@@ -33,11 +33,11 @@ public class Offer implements Serializable {
         this.offerType = offerType;
     }
 
-    public int getDiscount() {
+    public Integer getDiscount() {
         return discount;
     }
 
-    public void setDiscount(int discount) {
+    public void setDiscount(Integer discount) {
         this.discount = discount;
     }
 }
