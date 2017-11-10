@@ -16,6 +16,8 @@ import java.io.Serializable;
 @SequenceGenerator(name = "packageInfo_id_seq", allocationSize = 1, sequenceName = "packageInfo_id_seq")
 public class PackageInfo implements Serializable {
 
+    private static final long serialVersionUID = 9058825483221024079L;
+
     @Id
     @Column(name = "IDPACKAGE")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "packageInfo_id_seq")
@@ -40,10 +42,6 @@ public class PackageInfo implements Serializable {
         return idPackage;
     }
 
-    public void setIdPackage(Integer idPackage) {
-        this.idPackage = idPackage;
-    }
-
     public String getVulnerability() {
         return vulnerability;
     }
@@ -58,5 +56,25 @@ public class PackageInfo implements Serializable {
 
     public void setCategory(PackageDimension category) {
         this.category = category;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PackageInfo that = (PackageInfo) o;
+
+        if (!idPackage.equals(that.idPackage)) return false;
+        if (!vulnerability.equals(that.vulnerability)) return false;
+        return category.equals(that.category);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = idPackage.hashCode();
+        result = 31 * result + vulnerability.hashCode();
+        result = 31 * result + category.hashCode();
+        return result;
     }
 }

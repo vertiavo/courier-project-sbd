@@ -10,6 +10,8 @@ import java.io.Serializable;
 @Table(name = "OFFER")
 public class Offer implements Serializable {
 
+    private static final long serialVersionUID = -6047154146312102587L;
+
     @Id
     @Column(name = "OFFERTYPE")
     private String offerType;
@@ -39,5 +41,23 @@ public class Offer implements Serializable {
 
     public void setDiscount(Integer discount) {
         this.discount = discount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Offer offer = (Offer) o;
+
+        if (!offerType.equals(offer.offerType)) return false;
+        return discount.equals(offer.discount);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = offerType.hashCode();
+        result = 31 * result + discount.hashCode();
+        return result;
     }
 }

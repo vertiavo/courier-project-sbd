@@ -13,6 +13,8 @@ import java.util.Date;
 @Table(name = "COURIERCARAREA")
 public class CourierCarArea implements Serializable {
 
+    private static final long serialVersionUID = -5758624919070579970L;
+
     @EmbeddedId
     private CourierCarAreaId idCourierCarArea;
 
@@ -67,5 +69,27 @@ public class CourierCarArea implements Serializable {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CourierCarArea that = (CourierCarArea) o;
+
+        if (!idCourierCarArea.equals(that.idCourierCarArea)) return false;
+        if (!idCar.equals(that.idCar)) return false;
+        if (!idArea.equals(that.idArea)) return false;
+        return endDate != null ? endDate.equals(that.endDate) : that.endDate == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = idCourierCarArea.hashCode();
+        result = 31 * result + idCar.hashCode();
+        result = 31 * result + idArea.hashCode();
+        result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
+        return result;
     }
 }

@@ -16,6 +16,8 @@ import java.io.Serializable;
 @SequenceGenerator(name = "sender_id_seq", allocationSize = 1, sequenceName = "sender_id_seq")
 public class Sender implements Serializable {
 
+    private static final long serialVersionUID = 220053935647179065L;
+
     @Id
     @Column(name = "IDSENDER")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "sender_id_seq")
@@ -50,10 +52,6 @@ public class Sender implements Serializable {
 
     public Integer getIdSender() {
         return idSender;
-    }
-
-    public void setIdSender(Integer idSender) {
-        this.idSender = idSender;
     }
 
     public String getAddress() {
@@ -94,5 +92,31 @@ public class Sender implements Serializable {
 
     public void setNip(Integer nip) {
         this.nip = nip;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Sender sender = (Sender) o;
+
+        if (!idSender.equals(sender.idSender)) return false;
+        if (!address.equals(sender.address)) return false;
+        if (!offerType.equals(sender.offerType)) return false;
+        if (!name.equals(sender.name)) return false;
+        if (!surname.equals(sender.surname)) return false;
+        return nip != null ? nip.equals(sender.nip) : sender.nip == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = idSender.hashCode();
+        result = 31 * result + address.hashCode();
+        result = 31 * result + offerType.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + surname.hashCode();
+        result = 31 * result + (nip != null ? nip.hashCode() : 0);
+        return result;
     }
 }

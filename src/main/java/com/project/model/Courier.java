@@ -14,6 +14,8 @@ import java.io.Serializable;
 @SequenceGenerator(name = "courier_id_seq", allocationSize = 1, sequenceName = "courier_id_seq")
 public class Courier implements Serializable {
 
+    private static final long serialVersionUID = 5870649598423599935L;
+
     @Id
     @Column(name = "IDCOURIER")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "courier_id_seq")
@@ -43,10 +45,6 @@ public class Courier implements Serializable {
 
     public Integer getIdCourier() {
         return idCourier;
-    }
-
-    public void setIdCourier(Integer idCourier) {
-        this.idCourier = idCourier;
     }
 
     public String getName() {
@@ -79,5 +77,29 @@ public class Courier implements Serializable {
 
     public void setPhoneNumber(Integer phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Courier courier = (Courier) o;
+
+        if (!idCourier.equals(courier.idCourier)) return false;
+        if (!name.equals(courier.name)) return false;
+        if (!surname.equals(courier.surname)) return false;
+        if (!address.equals(courier.address)) return false;
+        return phoneNumber.equals(courier.phoneNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = idCourier.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + surname.hashCode();
+        result = 31 * result + address.hashCode();
+        result = 31 * result + phoneNumber.hashCode();
+        return result;
     }
 }

@@ -17,6 +17,8 @@ import java.sql.Date;
 @SequenceGenerator(name = "orderInfo_id_seq", allocationSize = 1, sequenceName = "orderInfo_id_seq")
 public class OrderInfo implements Serializable {
 
+    private static final long serialVersionUID = -6233008236801512952L;
+
     @Id
     @Column(name = "IDORDER")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "orderInfo_id_seq")
@@ -59,10 +61,6 @@ public class OrderInfo implements Serializable {
 
     public Integer getIdOrder() {
         return idOrder;
-    }
-
-    public void setIdOrder(Integer idOrder) {
-        this.idOrder = idOrder;
     }
 
     public Sender getIdSender() {
@@ -111,5 +109,33 @@ public class OrderInfo implements Serializable {
 
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        OrderInfo orderInfo = (OrderInfo) o;
+
+        if (!idOrder.equals(orderInfo.idOrder)) return false;
+        if (!idSender.equals(orderInfo.idSender)) return false;
+        if (!idRecipient.equals(orderInfo.idRecipient)) return false;
+        if (!idCourier.equals(orderInfo.idCourier)) return false;
+        if (!idPackage.equals(orderInfo.idPackage)) return false;
+        if (!idPayment.equals(orderInfo.idPayment)) return false;
+        return orderDate.equals(orderInfo.orderDate);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = idOrder.hashCode();
+        result = 31 * result + idSender.hashCode();
+        result = 31 * result + idRecipient.hashCode();
+        result = 31 * result + idCourier.hashCode();
+        result = 31 * result + idPackage.hashCode();
+        result = 31 * result + idPayment.hashCode();
+        result = 31 * result + orderDate.hashCode();
+        return result;
     }
 }

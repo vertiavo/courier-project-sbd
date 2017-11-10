@@ -14,6 +14,8 @@ import java.io.Serializable;
 @SequenceGenerator(name = "area_id_seq", allocationSize = 1, sequenceName = "area_id_seq")
 public class Area implements Serializable {
 
+    private static final long serialVersionUID = 31130138911259853L;
+
     @Id
     @Column(name = "IDAREA")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "area_id_seq")

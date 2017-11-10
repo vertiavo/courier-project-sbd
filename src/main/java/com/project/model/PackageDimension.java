@@ -10,6 +10,8 @@ import java.io.Serializable;
 @Table(name = "PACKAGEDIMENSION")
 public class PackageDimension implements Serializable {
 
+    private static final long serialVersionUID = 5956498803173741448L;
+
     @Id
     @Column(name = "CATEGORY")
     private String category;
@@ -51,5 +53,25 @@ public class PackageDimension implements Serializable {
 
     public void setMaxVolume(Double maxVolume) {
         this.maxVolume = maxVolume;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PackageDimension that = (PackageDimension) o;
+
+        if (!category.equals(that.category)) return false;
+        if (!maxWeight.equals(that.maxWeight)) return false;
+        return maxVolume.equals(that.maxVolume);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = category.hashCode();
+        result = 31 * result + maxWeight.hashCode();
+        result = 31 * result + maxVolume.hashCode();
+        return result;
     }
 }

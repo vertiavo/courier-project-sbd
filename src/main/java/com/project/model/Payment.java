@@ -14,6 +14,8 @@ import java.io.Serializable;
 @SequenceGenerator(name = "payment_id_seq", allocationSize = 1, sequenceName = "payment_id_seq")
 public class Payment implements Serializable {
 
+    private static final long serialVersionUID = -5903120592270636907L;
+
     @Id
     @Column(name = "IDPAYMENT")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "payment_id_seq")
@@ -37,10 +39,6 @@ public class Payment implements Serializable {
         return idPayment;
     }
 
-    public void setIdPayment(Integer idPayment) {
-        this.idPayment = idPayment;
-    }
-
     public Double getPrice() {
         return price;
     }
@@ -55,5 +53,25 @@ public class Payment implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Payment payment = (Payment) o;
+
+        if (!idPayment.equals(payment.idPayment)) return false;
+        if (!price.equals(payment.price)) return false;
+        return type.equals(payment.type);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = idPayment.hashCode();
+        result = 31 * result + price.hashCode();
+        result = 31 * result + type.hashCode();
+        return result;
     }
 }
