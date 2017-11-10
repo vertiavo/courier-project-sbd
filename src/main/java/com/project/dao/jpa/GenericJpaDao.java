@@ -27,6 +27,8 @@ public class GenericJpaDao<T, K> implements GenericDao<T, K> {
             session.save(t);
             session.getTransaction().commit();
             System.out.println("Record added.");
+        } finally {
+            sf.close();
         }
     }
 
@@ -40,6 +42,8 @@ public class GenericJpaDao<T, K> implements GenericDao<T, K> {
             session.remove(t);
             session.getTransaction().commit();
             System.out.println("Record removed.");
+        } finally {
+            sf.close();
         }
     }
 
@@ -52,16 +56,20 @@ public class GenericJpaDao<T, K> implements GenericDao<T, K> {
             session.merge(t);
             session.getTransaction().commit();
             System.out.println("Record updated.");
+        } finally {
+            sf.close();
         }
     }
 
     @Override
     public T findById(K k) {
         SessionFactory sf = HibernateUtil.getSessionFactory();
-        T model = null;
+        T model;
 
         try (Session session = sf.openSession()) {
             model = session.find(type, k);
+        } finally {
+            sf.close();
         }
         return model;
     }

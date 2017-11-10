@@ -24,7 +24,7 @@ import java.util.Date;
 
 public class Main {
 
-    public static void main(final String[] args) throws Exception {
+    public static void main(final String[] args) {
 
         // Creating APIs for data transfer
         CarDao carDao = new CarJpaDao();

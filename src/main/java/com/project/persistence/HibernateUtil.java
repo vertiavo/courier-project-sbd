@@ -13,7 +13,7 @@ public class HibernateUtil {
             return new Configuration()
                     .configure()
                     .buildSessionFactory();
-        } catch (Throwable ex) {
+        } catch (Exception ex) {
             System.err.println("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
         }
