@@ -27,8 +27,6 @@ public class GenericJpaDao<T, K> implements GenericDao<T, K> {
             session.save(t);
             session.getTransaction().commit();
             System.out.println("Record added.");
-        } finally {
-            sf.close();
         }
     }
 
@@ -42,8 +40,6 @@ public class GenericJpaDao<T, K> implements GenericDao<T, K> {
             session.remove(t);
             session.getTransaction().commit();
             System.out.println("Record removed.");
-        } finally {
-            sf.close();
         }
     }
 
@@ -56,8 +52,6 @@ public class GenericJpaDao<T, K> implements GenericDao<T, K> {
             session.merge(t);
             session.getTransaction().commit();
             System.out.println("Record updated.");
-        } finally {
-            sf.close();
         }
     }
 
@@ -68,8 +62,6 @@ public class GenericJpaDao<T, K> implements GenericDao<T, K> {
 
         try (Session session = sf.openSession()) {
             model = session.find(type, k);
-        } finally {
-            sf.close();
         }
         return model;
     }

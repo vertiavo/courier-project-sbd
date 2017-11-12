@@ -13,8 +13,6 @@
             oracle.jdbc.driver.OracleDriver
         </property>
 
-        <!-- Assume test is the database name -->
-
         <property name = "hibernate.connection.url">
             jdbc:oracle:thin:@212.33.90.213:1521:XE
         </property>

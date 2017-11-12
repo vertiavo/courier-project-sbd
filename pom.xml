@@ -20,9 +20,9 @@
             <version>5.2.11.Final</version>
         </dependency>
         <dependency>
-            <groupId>com.github.noraui</groupId>
-            <artifactId>ojdbc7</artifactId>
-            <version>12.1.0.2</version>
+            <groupId>ojdbc</groupId>
+            <artifactId>ojdbc</artifactId>
+            <version>14</version>
         </dependency>
     </dependencies>
 
