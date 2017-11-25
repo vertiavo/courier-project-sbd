@@ -8,8 +8,8 @@
    <center>
       <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn fx:id="col1" prefWidth="75.0" text="C1" />
+          <TableColumn fx:id="col2" prefWidth="75.0" text="C2" />
         </columns>
       </TableView>
    </center>
