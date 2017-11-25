@@ -2,11 +2,18 @@ package com.project.dao.jpa;
 
 import com.project.dao.GenericDao;
 import com.project.persistence.HibernateUtil;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GenericJpaDao<T, K> implements GenericDao<T, K> {
 
@@ -64,5 +71,23 @@ public class GenericJpaDao<T, K> implements GenericDao<T, K> {
             model = session.find(type, k);
         }
         return model;
+    }
+
+    @Override
+    public List<T> getAll() {
+        SessionFactory sf = HibernateUtil.getSessionFactory();
+        List<T> data = new ArrayList<>();
+
+        try (Session session = sf.openSession()) {
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(type);
+            Root<T> genericData = criteriaQuery.from(type);
+            criteriaQuery.select(genericData);
+
+            TypedQuery<T> typedQuery = session.createQuery(criteriaQuery);
+            data = typedQuery.getResultList();
+        }
+
+        return data;
     }
 }
