@@ -19,10 +19,12 @@
 
         <property name = "hibernate.connection.username">
             <!--username-->
+            sbd_inf_ps7_9
         </property>
 
         <property name = "hibernate.connection.password">
             <!--password-->
+            sbd_inf_ps7_9
         </property>
 
         <mapping class="com.project.model.Offer"/>
