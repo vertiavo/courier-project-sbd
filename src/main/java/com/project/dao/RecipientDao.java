@@ -1,6 +1,6 @@
 package com.project.dao;
 
-import com.project.model.Recipient;
+import com.project.dto.Recipient;
 
 public interface RecipientDao extends GenericDao<Recipient, Integer> {
 }

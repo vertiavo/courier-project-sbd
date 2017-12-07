@@ -1,4 +1,4 @@
-package com.project.model;
+package com.project.dto;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;

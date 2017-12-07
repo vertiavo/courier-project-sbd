@@ -1,6 +1,6 @@
 package com.project.dao;
 
-import com.project.model.Payment;
+import com.project.dto.Payment;
 
 public interface PaymentDao extends GenericDao<Payment, Integer> {
 }

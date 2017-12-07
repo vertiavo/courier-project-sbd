@@ -1,6 +1,6 @@
 package com.project.dao;
 
-import com.project.model.Offer;
+import com.project.dto.Offer;
 
 public interface OfferDao extends GenericDao<Offer, String> {
 }

@@ -1,4 +1,4 @@
-package com.project.model;
+package com.project.dto;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -59,5 +59,10 @@ public class Offer implements Serializable {
         int result = offerType.hashCode();
         result = 31 * result + discount.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return offerType;
     }
 }

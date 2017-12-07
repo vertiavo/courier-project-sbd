@@ -1,33 +1,21 @@
 package com.project.common;
 
-import com.project.dao.AreaDao;
-import com.project.dao.CarDao;
-import com.project.dao.CourierCarAreaDao;
-import com.project.dao.CourierDao;
-import com.project.dao.OfferDao;
-import com.project.dao.OrderInfoDao;
-import com.project.dao.PackageDimensionDao;
-import com.project.dao.PackageInfoDao;
-import com.project.dao.PaymentDao;
-import com.project.dao.RecipientDao;
-import com.project.dao.SenderDao;
-import com.project.dao.jpa.AreaJpaDao;
-import com.project.dao.jpa.CarJpaDao;
-import com.project.dao.jpa.CourierCarAreaJpaDao;
-import com.project.dao.jpa.CourierJpaDao;
-import com.project.dao.jpa.OfferJpaDao;
-import com.project.dao.jpa.OrderInfoJpaDao;
-import com.project.dao.jpa.PackageDimensionJpaDao;
-import com.project.dao.jpa.PackageInfoJpaDao;
-import com.project.dao.jpa.PaymentJpaDao;
-import com.project.dao.jpa.RecipientJpaDao;
-import com.project.dao.jpa.SenderJpaDao;
-import com.project.model.Car;
+import com.project.common.table.helper.TableAreaHelper;
+import com.project.common.table.helper.TableCarHelper;
+import com.project.common.table.helper.TableCourierCarAreaHelper;
+import com.project.common.table.helper.TableCourierHelper;
+import com.project.common.table.helper.TableOfferHelper;
+import com.project.common.table.helper.TableOrderInfoHelper;
+import com.project.common.table.helper.TablePackageDimensionHelper;
+import com.project.common.table.helper.TablePackageInfoHelper;
+import com.project.common.table.helper.TablePaymentHelper;
+import com.project.common.table.helper.TableRecipientHelper;
+import com.project.common.table.helper.TableSenderHelper;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 
@@ -49,21 +37,36 @@ public class Controller implements Initializable {
     private static final String SENDER = "Sender";
 
     @FXML
-    private TableView<Car> table;
+    private TableView table;
 
     @FXML
     private ListView<String> listView;
 
-    private ObservableList<Car> data;
+    @FXML
+    private Button editButton;
+
+    @FXML
+    private Button deleteButton;
+
+    @FXML
+    private Button newButton;
+
+    private TableAreaHelper areaHelper;
+    private TableCarHelper carHelper;
+    private TableCourierHelper courierHelper;
+    private TableCourierCarAreaHelper courierCarAreaHelper;
+    private TableOfferHelper offerHelper;
+    private TableOrderInfoHelper orderInfoHelper;
+    private TablePackageDimensionHelper packageDimensionHelper;
+    private TablePackageInfoHelper packageInfoHelper;
+    private TablePaymentHelper paymentHelper;
+    private TableRecipientHelper recipientHelper;
+    private TableSenderHelper senderHelper;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        data  =  FXCollections.observableArrayList();
-
         setListItems();
         setListClickEvent();
-
-        table.setItems(data);
     }
 
     private void setListItems() {
@@ -87,48 +90,39 @@ public class Controller implements Initializable {
             String selectedItem = listView.getSelectionModel().getSelectedItem();
             switch (selectedItem) {
                 case AREA:
-                    AreaDao areaDao = new AreaJpaDao();
-                    System.out.println(areaDao.getAll());
+                    areaHelper = new TableAreaHelper(table);
                     break;
                 case CAR:
-                    CarDao carDao = new CarJpaDao();
-                    System.out.println(carDao.getAll());
+                    carHelper = new TableCarHelper(table);
                     break;
                 case COURIER:
-                    CourierDao courierDao = new CourierJpaDao();
-                    System.out.println(courierDao.getAll());
+                    courierHelper = new TableCourierHelper(table);
                     break;
                 case COURIER_CAR_AREA:
-                    CourierCarAreaDao courierCarAreaDao = new CourierCarAreaJpaDao();
-                    System.out.println(courierCarAreaDao.getAll());
+                    courierCarAreaHelper = new TableCourierCarAreaHelper(table);
                     break;
                 case OFFER:
-                    OfferDao offerDao = new OfferJpaDao();
-                    System.out.println(offerDao.getAll());
+                    offerHelper = new TableOfferHelper(table);
                     break;
                 case ORDER_INFO:
-                    OrderInfoDao orderInfoDao = new OrderInfoJpaDao();
-                    System.out.println(orderInfoDao.getAll());
+                    orderInfoHelper = new TableOrderInfoHelper(table);
                     break;
                 case PACKAGE_DIMENSION:
-                    PackageDimensionDao packageDimensionDao = new PackageDimensionJpaDao();
-                    System.out.println(packageDimensionDao.getAll());
+                    packageDimensionHelper = new TablePackageDimensionHelper(table);
                     break;
                 case PACKAGE_INFO:
-                    PackageInfoDao packageInfoDao = new PackageInfoJpaDao();
-                    System.out.println(packageInfoDao.getAll());
+                    packageInfoHelper = new TablePackageInfoHelper(table);
                     break;
                 case PAYMENT:
-                    PaymentDao paymentDao = new PaymentJpaDao();
-                    System.out.println(paymentDao.getAll());
+                    paymentHelper = new TablePaymentHelper(table);
                     break;
                 case RECIPIENT:
-                    RecipientDao recipientDao = new RecipientJpaDao();
-                    System.out.println(recipientDao.getAll());
+                    recipientHelper = new TableRecipientHelper(table);
                     break;
                 case SENDER:
-                    SenderDao senderDao = new SenderJpaDao();
-                    System.out.println(senderDao.getAll());
+                    senderHelper = new TableSenderHelper(table);
+                    break;
+                default:
                     break;
             }
         });

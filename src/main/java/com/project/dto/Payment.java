@@ -1,4 +1,4 @@
-package com.project.model;
+package com.project.dto;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -73,5 +73,10 @@ public class Payment implements Serializable {
         result = 31 * result + price.hashCode();
         result = 31 * result + type.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return idPayment.toString();
     }
 }

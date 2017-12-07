@@ -1,4 +1,4 @@
-package com.project.model;
+package com.project.dto;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -101,5 +101,10 @@ public class Car implements Serializable {
         result = 31 * result + load.hashCode();
         result = 31 * result + capacity.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return idCar.toString();
     }
 }

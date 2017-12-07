@@ -1,7 +1,7 @@
 package com.project.dao;
 
-import com.project.model.CourierCarArea;
-import com.project.model.CourierCarAreaId;
+import com.project.dto.CourierCarArea;
+import com.project.dto.CourierCarAreaId;
 
 public interface CourierCarAreaDao extends GenericDao<CourierCarArea, CourierCarAreaId> {
 }

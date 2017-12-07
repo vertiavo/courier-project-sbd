@@ -1,6 +1,6 @@
 package com.project.dao;
 
-import com.project.model.PackageInfo;
+import com.project.dto.PackageInfo;
 
 public interface PackageInfoDao extends GenericDao<PackageInfo, Integer> {
 }

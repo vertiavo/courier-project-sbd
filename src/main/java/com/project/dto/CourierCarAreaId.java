@@ -1,10 +1,11 @@
-package com.project.model;
+package com.project.dto;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Embeddable
@@ -57,5 +58,10 @@ public class CourierCarAreaId implements Serializable {
         int result = idCourier.hashCode();
         result = 31 * result + beginDate.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return idCourier.getIdCourier() + "/" + new SimpleDateFormat("yyyy.MM.dd").format(beginDate);
     }
 }

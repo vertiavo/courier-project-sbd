@@ -1,4 +1,4 @@
-package com.project.model;
+package com.project.dto;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "AREA")
@@ -45,5 +46,25 @@ public class Area implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Area area = (Area) o;
+        return Objects.equals(idArea, area.idArea) &&
+                Objects.equals(name, area.name);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(idArea, name);
+    }
+
+    @Override
+    public String toString() {
+        return idArea.toString();
     }
 }

@@ -1,4 +1,4 @@
-package com.project.model;
+package com.project.dto;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -118,5 +118,10 @@ public class Sender implements Serializable {
         result = 31 * result + surname.hashCode();
         result = 31 * result + (nip != null ? nip.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return idSender.toString();
     }
 }

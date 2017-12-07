@@ -1,6 +1,6 @@
 package com.project.dao;
 
-import com.project.model.PackageDimension;
+import com.project.dto.PackageDimension;
 
 public interface PackageDimensionDao extends GenericDao<PackageDimension, String> {
 }

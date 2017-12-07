@@ -27,17 +27,17 @@
             sbd_inf_ps7_9
         </property>
 
-        <mapping class="com.project.model.Offer"/>
-        <mapping class="com.project.model.Sender"/>
-        <mapping class="com.project.model.Payment"/>
-        <mapping class="com.project.model.Recipient"/>
-        <mapping class="com.project.model.PackageDimension"/>
-        <mapping class="com.project.model.PackageInfo"/>
-        <mapping class="com.project.model.Car"/>
-        <mapping class="com.project.model.Area"/>
-        <mapping class="com.project.model.Courier"/>
-        <mapping class="com.project.model.CourierCarArea"/>
-        <mapping class="com.project.model.OrderInfo"/>
+        <mapping class="com.project.dto.Offer"/>
+        <mapping class="com.project.dto.Sender"/>
+        <mapping class="com.project.dto.Payment"/>
+        <mapping class="com.project.dto.Recipient"/>
+        <mapping class="com.project.dto.PackageDimension"/>
+        <mapping class="com.project.dto.PackageInfo"/>
+        <mapping class="com.project.dto.Car"/>
+        <mapping class="com.project.dto.Area"/>
+        <mapping class="com.project.dto.Courier"/>
+        <mapping class="com.project.dto.CourierCarArea"/>
+        <mapping class="com.project.dto.OrderInfo"/>
 
     </session-factory>
 </hibernate-configuration>

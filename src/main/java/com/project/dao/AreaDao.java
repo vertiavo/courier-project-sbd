@@ -1,6 +1,6 @@
 package com.project.dao;
 
-import com.project.model.Area;
+import com.project.dto.Area;
 
 public interface AreaDao extends GenericDao<Area, Integer> {
 }
