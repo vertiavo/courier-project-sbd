@@ -12,7 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.Date;
 
-public class TableCourierCarAreaHelper {
+public class TableCourierCarAreaHelper implements TableHelper<CourierCarArea> {
 
     private final ObservableList<CourierCarArea> data;
     private TableView<CourierCarArea> courierCarAreaTable;
@@ -20,11 +20,11 @@ public class TableCourierCarAreaHelper {
 
     public TableCourierCarAreaHelper(TableView courierCarAreaTable) {
         this.courierCarAreaTable = courierCarAreaTable;
-        this.data = loadCourierCarAreaData();
+        this.data = loadData();
         setUp();
     }
 
-    private ObservableList<CourierCarArea> loadCourierCarAreaData() {
+    private ObservableList<CourierCarArea> loadData() {
         return FXCollections.observableArrayList(courierCarAreaDao.getAll());
     }
 
@@ -39,25 +39,32 @@ public class TableCourierCarAreaHelper {
         TableColumn idCarCol = new TableColumn("Car ID");
         idCarCol.setMinWidth(50);
         idCarCol.setCellValueFactory(new PropertyValueFactory<CourierCarArea, String>("idCar"));
+        // TODO dropdown for choosing desired car
 
         TableColumn idAreaCol = new TableColumn("Area ID");
         idAreaCol.setMinWidth(50);
         idAreaCol.setCellValueFactory(new PropertyValueFactory<CourierCarArea, String>("idArea"));
+        // TODO dropdown for choosing desired area
 
         TableColumn endDaterCol = new TableColumn("End date");
         endDaterCol.setMinWidth(150);
         endDaterCol.setCellValueFactory(new PropertyValueFactory<CourierCarArea, Date>("endDate"));
+        // TODO datepicker or simple date edit
 
         courierCarAreaTable.setItems(data);
         courierCarAreaTable.getColumns().addAll(idCourierCol, idCarCol, idAreaCol, endDaterCol);
     }
 
-    public void addCourierCarArea(CourierCarArea courierCarArea) {
+    public void add(CourierCarArea courierCarArea) {
         courierCarAreaDao.save(courierCarArea);
         data.add(courierCarArea);
     }
 
-    public void deleteCourierCarArea(CourierCarArea courierCarArea) {
+    private void edit(CourierCarArea courierCarArea) {
+        courierCarAreaDao.update(courierCarArea);
+    }
+
+    public void delete(CourierCarArea courierCarArea) {
         courierCarAreaDao.delete(courierCarArea);
         data.remove(courierCarArea);
     }

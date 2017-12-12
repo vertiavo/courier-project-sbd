@@ -6,11 +6,13 @@ import com.project.dto.Area;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 
-public class TableAreaHelper {
+public class TableAreaHelper implements TableHelper<Area> {
 
     private final ObservableList<Area> data;
     private TableView<Area> areaTable;
@@ -18,11 +20,11 @@ public class TableAreaHelper {
 
     public TableAreaHelper(TableView areaTable) {
         this.areaTable = areaTable;
-        this.data = loadAreaData();
+        this.data = loadData();
         setUp();
     }
 
-    private ObservableList<Area> loadAreaData() {
+    private ObservableList<Area> loadData() {
         return FXCollections.observableArrayList(areaDao.getAll());
     }
 
@@ -37,17 +39,29 @@ public class TableAreaHelper {
         TableColumn nameCol = new TableColumn("Name");
         nameCol.setMinWidth(100);
         nameCol.setCellValueFactory(new PropertyValueFactory<Area, String>("name"));
+        nameCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        nameCol.setOnEditCommit(
+                (EventHandler<TableColumn.CellEditEvent<Area, String>>) t -> {
+                    Area area = t.getTableView().getItems().get(t.getTablePosition().getRow());
+                    area.setName(t.getNewValue());
+                    edit(area);
+                }
+        );
 
         areaTable.setItems(data);
         areaTable.getColumns().addAll(idCol, nameCol);
     }
 
-    public void addArea(Area area) {
+    public void add(Area area) {
         areaDao.save(area);
         data.add(area);
     }
 
-    public void deleteArea(Area area) {
+    private void edit(Area area) {
+        areaDao.update(area);
+    }
+
+    public void delete(Area area) {
         areaDao.delete(area);
         data.remove(area);
     }

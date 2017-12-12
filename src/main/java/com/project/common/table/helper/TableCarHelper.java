@@ -6,11 +6,13 @@ import com.project.dto.Car;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 
-public class TableCarHelper {
+public class TableCarHelper implements TableHelper<Car> {
 
     private final ObservableList<Car> data;
     private TableView<Car> carTable;
@@ -18,11 +20,11 @@ public class TableCarHelper {
 
     public TableCarHelper(TableView carTable) {
         this.carTable = carTable;
-        this.data = loadCarData();
+        this.data = loadData();
         setUp();
     }
 
-    private ObservableList<Car> loadCarData() {
+    private ObservableList<Car> loadData() {
         return FXCollections.observableArrayList(carDao.getAll());
     }
 
@@ -37,29 +39,51 @@ public class TableCarHelper {
         TableColumn brandCol = new TableColumn("Brand");
         brandCol.setMinWidth(100);
         brandCol.setCellValueFactory(new PropertyValueFactory<Car, String>("brand"));
+        brandCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        brandCol.setOnEditCommit(
+                (EventHandler<TableColumn.CellEditEvent<Car, String>>) t -> {
+                    Car car = t.getTableView().getItems().get(t.getTablePosition().getRow());
+                    car.setBrand(t.getNewValue());
+                    edit(car);
+                }
+        );
 
         TableColumn modelCol = new TableColumn("Model");
         modelCol.setMinWidth(100);
         modelCol.setCellValueFactory(new PropertyValueFactory<Car, String>("model"));
+        modelCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        modelCol.setOnEditCommit(
+                (EventHandler<TableColumn.CellEditEvent<Car, String>>) t -> {
+                    Car car = t.getTableView().getItems().get(t.getTablePosition().getRow());
+                    car.setModel(t.getNewValue());
+                    edit(car);
+                }
+        );
 
         TableColumn loadCol = new TableColumn("Load");
         loadCol.setMinWidth(50);
         loadCol.setCellValueFactory(new PropertyValueFactory<Car, Double>("load"));
+        // TODO load edit handler
 
         TableColumn capacityCol = new TableColumn("Capacity");
         capacityCol.setMinWidth(50);
         capacityCol.setCellValueFactory(new PropertyValueFactory<Car, Double>("capacity"));
+        // TODO capacity edit handler
 
         carTable.setItems(data);
         carTable.getColumns().addAll(idCol, brandCol, modelCol, loadCol, capacityCol);
     }
 
-    public void addCar(Car car) {
+    public void add(Car car) {
         carDao.save(car);
         data.add(car);
     }
 
-    public void deleteCar(Car car) {
+    private void edit(Car car) {
+        carDao.update(car);
+    }
+
+    public void delete(Car car) {
         carDao.delete(car);
         data.remove(car);
     }

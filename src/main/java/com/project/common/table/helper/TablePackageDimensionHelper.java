@@ -10,7 +10,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class TablePackageDimensionHelper {
+public class TablePackageDimensionHelper implements TableHelper<PackageDimension> {
 
     private final ObservableList<PackageDimension> data;
     private TableView<PackageDimension> packageDimensionTable;
@@ -18,11 +18,11 @@ public class TablePackageDimensionHelper {
 
     public TablePackageDimensionHelper(TableView packageDimensionTable) {
         this.packageDimensionTable = packageDimensionTable;
-        this.data = loadPackageDimensionData();
+        this.data = loadData();
         setUp();
     }
 
-    private ObservableList<PackageDimension> loadPackageDimensionData() {
+    private ObservableList<PackageDimension> loadData() {
         return FXCollections.observableArrayList(packageDimensionDao.getAll());
     }
 
@@ -37,21 +37,27 @@ public class TablePackageDimensionHelper {
         TableColumn maxWeightCol = new TableColumn("Max weight");
         maxWeightCol.setMinWidth(50);
         maxWeightCol.setCellValueFactory(new PropertyValueFactory<PackageDimension, Double>("maxWeight"));
+        // TODO load edit handler
 
         TableColumn maxVolumeCol = new TableColumn("Max volume");
         maxVolumeCol.setMinWidth(50);
         maxVolumeCol.setCellValueFactory(new PropertyValueFactory<PackageDimension, Double>("maxVolume"));
+        // TODO load edit handler
 
         packageDimensionTable.setItems(data);
         packageDimensionTable.getColumns().addAll(categoryCol, maxWeightCol, maxVolumeCol);
     }
 
-    public void addPackageDimension(PackageDimension packageDimension) {
+    public void add(PackageDimension packageDimension) {
         packageDimensionDao.save(packageDimension);
         data.add(packageDimension);
     }
 
-    public void deletePackageDimension(PackageDimension packageDimension) {
+    private void edit(PackageDimension packageDimension) {
+        packageDimensionDao.update(packageDimension);
+    }
+
+    public void delete(PackageDimension packageDimension) {
         packageDimensionDao.delete(packageDimension);
         data.remove(packageDimension);
     }

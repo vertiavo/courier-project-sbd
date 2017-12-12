@@ -10,7 +10,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class TableOfferHelper {
+public class TableOfferHelper implements TableHelper<Offer> {
 
     private final ObservableList<Offer> data;
     private TableView<Offer> offerTable;
@@ -18,11 +18,11 @@ public class TableOfferHelper {
 
     public TableOfferHelper(TableView offerTable) {
         this.offerTable = offerTable;
-        this.data = loadOfferData();
+        this.data = loadData();
         setUp();
     }
 
-    private ObservableList<Offer> loadOfferData() {
+    private ObservableList<Offer> loadData() {
         return FXCollections.observableArrayList(offerDao.getAll());
     }
 
@@ -37,17 +37,22 @@ public class TableOfferHelper {
         TableColumn discountCol = new TableColumn("Discount");
         discountCol.setMinWidth(50);
         discountCol.setCellValueFactory(new PropertyValueFactory<Offer, Integer>("discount"));
+        // TODO discount edit handler
 
         offerTable.setItems(data);
         offerTable.getColumns().addAll(offerTypeCol, discountCol);
     }
 
-    public void addOffer(Offer offer) {
+    public void add(Offer offer) {
         offerDao.save(offer);
         data.add(offer);
     }
 
-    public void deleteOffer(Offer offer) {
+    private void edit(Offer offer) {
+        offerDao.update(offer);
+    }
+
+    public void delete(Offer offer) {
         offerDao.delete(offer);
         data.remove(offer);
     }

@@ -6,11 +6,13 @@ import com.project.dto.PackageInfo;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 
-public class TablePackageInfoHelper {
+public class TablePackageInfoHelper implements TableHelper<PackageInfo> {
 
     private final ObservableList<PackageInfo> data;
     private TableView<PackageInfo> packageInfoTable;
@@ -18,11 +20,11 @@ public class TablePackageInfoHelper {
 
     public TablePackageInfoHelper(TableView packageInfoTable) {
         this.packageInfoTable = packageInfoTable;
-        this.data = loadPackageInfoData();
+        this.data = loadData();
         setUp();
     }
 
-    private ObservableList<PackageInfo> loadPackageInfoData() {
+    private ObservableList<PackageInfo> loadData() {
         return FXCollections.observableArrayList(packageInfoDao.getAll());
     }
 
@@ -37,21 +39,34 @@ public class TablePackageInfoHelper {
         TableColumn vulnerabilityCol = new TableColumn("Vulnerability");
         vulnerabilityCol.setMinWidth(100);
         vulnerabilityCol.setCellValueFactory(new PropertyValueFactory<PackageInfo, String>("vulnerability"));
+        vulnerabilityCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        vulnerabilityCol.setOnEditCommit(
+                (EventHandler<TableColumn.CellEditEvent<PackageInfo, String>>) t -> {
+                    PackageInfo packageInfo = t.getTableView().getItems().get(t.getTablePosition().getRow());
+                    packageInfo.setVulnerability(t.getNewValue());
+                    edit(packageInfo);
+                }
+        );
 
         TableColumn categoryCol = new TableColumn("Category");
         categoryCol.setMinWidth(100);
         categoryCol.setCellValueFactory(new PropertyValueFactory<PackageInfo, String>("category"));
+        // TODO dropdown for choosing desired category
 
         packageInfoTable.setItems(data);
         packageInfoTable.getColumns().addAll(idCol, vulnerabilityCol, categoryCol);
     }
 
-    public void addPackageInfo(PackageInfo packageInfo) {
+    public void add(PackageInfo packageInfo) {
         packageInfoDao.save(packageInfo);
         data.add(packageInfo);
     }
 
-    public void deletePackageInfo(PackageInfo packageInfo) {
+    private void edit(PackageInfo packageInfo) {
+        packageInfoDao.update(packageInfo);
+    }
+
+    public void delete(PackageInfo packageInfo) {
         packageInfoDao.delete(packageInfo);
         data.remove(packageInfo);
     }

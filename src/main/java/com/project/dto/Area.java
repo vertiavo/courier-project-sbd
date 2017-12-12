@@ -36,10 +36,6 @@ public class Area implements Serializable {
         return idArea;
     }
 
-    public void setIdArea(Integer idArea) {
-        this.idArea = idArea;
-    }
-
     public String getName() {
         return name;
     }

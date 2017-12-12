@@ -4,6 +4,7 @@ import com.project.common.table.helper.TableAreaHelper;
 import com.project.common.table.helper.TableCarHelper;
 import com.project.common.table.helper.TableCourierCarAreaHelper;
 import com.project.common.table.helper.TableCourierHelper;
+import com.project.common.table.helper.TableHelper;
 import com.project.common.table.helper.TableOfferHelper;
 import com.project.common.table.helper.TableOrderInfoHelper;
 import com.project.common.table.helper.TablePackageDimensionHelper;
@@ -43,25 +44,12 @@ public class Controller implements Initializable {
     private ListView<String> listView;
 
     @FXML
-    private Button editButton;
-
-    @FXML
     private Button deleteButton;
 
     @FXML
     private Button newButton;
 
-    private TableAreaHelper areaHelper;
-    private TableCarHelper carHelper;
-    private TableCourierHelper courierHelper;
-    private TableCourierCarAreaHelper courierCarAreaHelper;
-    private TableOfferHelper offerHelper;
-    private TableOrderInfoHelper orderInfoHelper;
-    private TablePackageDimensionHelper packageDimensionHelper;
-    private TablePackageInfoHelper packageInfoHelper;
-    private TablePaymentHelper paymentHelper;
-    private TableRecipientHelper recipientHelper;
-    private TableSenderHelper senderHelper;
+    private TableHelper helper;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -90,37 +78,37 @@ public class Controller implements Initializable {
             String selectedItem = listView.getSelectionModel().getSelectedItem();
             switch (selectedItem) {
                 case AREA:
-                    areaHelper = new TableAreaHelper(table);
+                    helper = new TableAreaHelper(table);
                     break;
                 case CAR:
-                    carHelper = new TableCarHelper(table);
+                    helper = new TableCarHelper(table);
                     break;
                 case COURIER:
-                    courierHelper = new TableCourierHelper(table);
+                    helper = new TableCourierHelper(table);
                     break;
                 case COURIER_CAR_AREA:
-                    courierCarAreaHelper = new TableCourierCarAreaHelper(table);
+                    helper = new TableCourierCarAreaHelper(table);
                     break;
                 case OFFER:
-                    offerHelper = new TableOfferHelper(table);
+                    helper = new TableOfferHelper(table);
                     break;
                 case ORDER_INFO:
-                    orderInfoHelper = new TableOrderInfoHelper(table);
+                    helper = new TableOrderInfoHelper(table);
                     break;
                 case PACKAGE_DIMENSION:
-                    packageDimensionHelper = new TablePackageDimensionHelper(table);
+                    helper = new TablePackageDimensionHelper(table);
                     break;
                 case PACKAGE_INFO:
-                    packageInfoHelper = new TablePackageInfoHelper(table);
+                    helper = new TablePackageInfoHelper(table);
                     break;
                 case PAYMENT:
-                    paymentHelper = new TablePaymentHelper(table);
+                    helper = new TablePaymentHelper(table);
                     break;
                 case RECIPIENT:
-                    recipientHelper = new TableRecipientHelper(table);
+                    helper = new TableRecipientHelper(table);
                     break;
                 case SENDER:
-                    senderHelper = new TableSenderHelper(table);
+                    helper = new TableSenderHelper(table);
                     break;
                 default:
                     break;

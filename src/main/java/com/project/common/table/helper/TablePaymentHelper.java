@@ -6,11 +6,13 @@ import com.project.dto.Payment;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 
-public class TablePaymentHelper {
+public class TablePaymentHelper implements TableHelper<Payment> {
 
     private final ObservableList<Payment> data;
     private TableView<Payment> paymentTable;
@@ -18,11 +20,11 @@ public class TablePaymentHelper {
 
     public TablePaymentHelper(TableView paymentTable) {
         this.paymentTable = paymentTable;
-        this.data = loadPaymentData();
+        this.data = loadData();
         setUp();
     }
 
-    private ObservableList<Payment> loadPaymentData() {
+    private ObservableList<Payment> loadData() {
         return FXCollections.observableArrayList(paymentDao.getAll());
     }
 
@@ -37,21 +39,34 @@ public class TablePaymentHelper {
         TableColumn priceCol = new TableColumn("Price");
         priceCol.setMinWidth(50);
         priceCol.setCellValueFactory(new PropertyValueFactory<Payment, Double>("price"));
+        // TODO price edit handler
 
         TableColumn typeCol = new TableColumn("Type");
         typeCol.setMinWidth(100);
         typeCol.setCellValueFactory(new PropertyValueFactory<Payment, String>("type"));
+        typeCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        typeCol.setOnEditCommit(
+                (EventHandler<TableColumn.CellEditEvent<Payment, String>>) t -> {
+                    Payment payment = t.getTableView().getItems().get(t.getTablePosition().getRow());
+                    payment.setType(t.getNewValue());
+                    edit(payment);
+                }
+        );
 
         paymentTable.setItems(data);
         paymentTable.getColumns().addAll(idCol, priceCol, typeCol);
     }
 
-    public void addPayment(Payment payment) {
+    public void add(Payment payment) {
         paymentDao.save(payment);
         data.add(payment);
     }
 
-    public void deletePayment(Payment payment) {
+    private void edit(Payment payment) {
+        paymentDao.update(payment);
+    }
+
+    public void delete(Payment payment) {
         paymentDao.delete(payment);
         data.remove(payment);
     }
