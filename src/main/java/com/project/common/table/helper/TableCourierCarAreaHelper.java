@@ -6,9 +6,12 @@ import com.project.dto.CourierCarArea;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.converter.DateStringConverter;
 
 import java.util.Date;
 
@@ -49,8 +52,13 @@ public class TableCourierCarAreaHelper implements TableHelper<CourierCarArea> {
         TableColumn endDaterCol = new TableColumn("End date");
         endDaterCol.setMinWidth(150);
         endDaterCol.setCellValueFactory(new PropertyValueFactory<CourierCarArea, Date>("endDate"));
-        // TODO datepicker or simple date edit
-
+        endDaterCol.setCellFactory(TextFieldTableCell.<CourierCarArea, Date>forTableColumn(new DateStringConverter()));
+        endDaterCol.setEditable(true);
+        endDaterCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<CourierCarArea, Date>>) t -> {
+            CourierCarArea courierCarArea = t.getTableView().getItems().get(t.getTablePosition().getRow());
+            courierCarArea.setEndDate(t.getNewValue());
+            edit(courierCarArea);
+        });
         courierCarAreaTable.setItems(data);
         courierCarAreaTable.getColumns().addAll(idCourierCol, idCarCol, idAreaCol, endDaterCol);
     }

@@ -11,6 +11,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.converter.NumberStringConverter;
 
 public class TableRecipientHelper implements TableHelper<Recipient> {
 
@@ -40,42 +41,41 @@ public class TableRecipientHelper implements TableHelper<Recipient> {
         nameCol.setMinWidth(100);
         nameCol.setCellValueFactory(new PropertyValueFactory<Recipient, String>("name"));
         nameCol.setCellFactory(TextFieldTableCell.forTableColumn());
-        nameCol.setOnEditCommit(
-                (EventHandler<TableColumn.CellEditEvent<Recipient, String>>) t -> {
-                    Recipient recipient = t.getTableView().getItems().get(t.getTablePosition().getRow());
-                    recipient.setName(t.getNewValue());
-                    edit(recipient);
-                }
-        );
+        nameCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Recipient, String>>) t -> {
+            Recipient recipient = t.getTableView().getItems().get(t.getTablePosition().getRow());
+            recipient.setName(t.getNewValue());
+            edit(recipient);
+        });
 
         TableColumn surnameCol = new TableColumn("Surname");
         surnameCol.setMinWidth(100);
         surnameCol.setCellValueFactory(new PropertyValueFactory<Recipient, String>("surname"));
         surnameCol.setCellFactory(TextFieldTableCell.forTableColumn());
-        surnameCol.setOnEditCommit(
-                (EventHandler<TableColumn.CellEditEvent<Recipient, String>>) t -> {
-                    Recipient recipient = t.getTableView().getItems().get(t.getTablePosition().getRow());
-                    recipient.setSurname(t.getNewValue());
-                    edit(recipient);
-                }
-        );
+        surnameCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Recipient, String>>) t -> {
+            Recipient recipient = t.getTableView().getItems().get(t.getTablePosition().getRow());
+            recipient.setSurname(t.getNewValue());
+            edit(recipient);
+        });
 
         TableColumn addressCol = new TableColumn("Address");
         addressCol.setMinWidth(100);
         addressCol.setCellValueFactory(new PropertyValueFactory<Recipient, String>("address"));
         addressCol.setCellFactory(TextFieldTableCell.forTableColumn());
-        addressCol.setOnEditCommit(
-                (EventHandler<TableColumn.CellEditEvent<Recipient, String>>) t -> {
-                    Recipient recipient = t.getTableView().getItems().get(t.getTablePosition().getRow());
-                    recipient.setAddress(t.getNewValue());
-                    edit(recipient);
-                }
-        );
+        addressCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Recipient, String>>) t -> {
+            Recipient recipient = t.getTableView().getItems().get(t.getTablePosition().getRow());
+            recipient.setAddress(t.getNewValue());
+            edit(recipient);
+        });
 
         TableColumn phoneNumberCol = new TableColumn("Phone number");
         phoneNumberCol.setMinWidth(100);
         phoneNumberCol.setCellValueFactory(new PropertyValueFactory<Recipient, Integer>("phoneNumber"));
-        // TODO phoneNumber edit handler
+        phoneNumberCol.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
+        phoneNumberCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Recipient, Integer>>) t -> {
+            Recipient recipient = t.getTableView().getItems().get(t.getTablePosition().getRow());
+            recipient.setPhoneNumber(t.getNewValue());
+            edit(recipient);
+        });
 
         recipientTable.setItems(data);
         recipientTable.getColumns().addAll(idCol, nameCol, surnameCol, addressCol, phoneNumberCol);

@@ -2,13 +2,17 @@ package com.project.common.table.helper;
 
 import com.project.dao.OfferDao;
 import com.project.dao.jpa.OfferJpaDao;
+import com.project.dto.Courier;
 import com.project.dto.Offer;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.converter.NumberStringConverter;
 
 public class TableOfferHelper implements TableHelper<Offer> {
 
@@ -37,8 +41,12 @@ public class TableOfferHelper implements TableHelper<Offer> {
         TableColumn discountCol = new TableColumn("Discount");
         discountCol.setMinWidth(50);
         discountCol.setCellValueFactory(new PropertyValueFactory<Offer, Integer>("discount"));
-        // TODO discount edit handler
-
+        discountCol.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
+        discountCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Offer, Integer>>) t -> {
+            Offer offer = t.getTableView().getItems().get(t.getTablePosition().getRow());
+            offer.setDiscount(t.getNewValue());
+            edit(offer);
+        });
         offerTable.setItems(data);
         offerTable.getColumns().addAll(offerTypeCol, discountCol);
     }

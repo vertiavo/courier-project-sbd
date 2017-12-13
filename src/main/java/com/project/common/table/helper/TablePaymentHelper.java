@@ -11,6 +11,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.converter.DoubleStringConverter;
 
 public class TablePaymentHelper implements TableHelper<Payment> {
 
@@ -39,19 +40,22 @@ public class TablePaymentHelper implements TableHelper<Payment> {
         TableColumn priceCol = new TableColumn("Price");
         priceCol.setMinWidth(50);
         priceCol.setCellValueFactory(new PropertyValueFactory<Payment, Double>("price"));
-        // TODO price edit handler
+        priceCol.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        priceCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Payment, Double>>) t -> {
+            Payment payment = t.getTableView().getItems().get(t.getTablePosition().getRow());
+            payment.setPrice(t.getNewValue());
+            edit(payment);
+        });
 
         TableColumn typeCol = new TableColumn("Type");
         typeCol.setMinWidth(100);
         typeCol.setCellValueFactory(new PropertyValueFactory<Payment, String>("type"));
         typeCol.setCellFactory(TextFieldTableCell.forTableColumn());
-        typeCol.setOnEditCommit(
-                (EventHandler<TableColumn.CellEditEvent<Payment, String>>) t -> {
-                    Payment payment = t.getTableView().getItems().get(t.getTablePosition().getRow());
-                    payment.setType(t.getNewValue());
-                    edit(payment);
-                }
-        );
+        typeCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Payment, String>>) t -> {
+            Payment payment = t.getTableView().getItems().get(t.getTablePosition().getRow());
+            payment.setType(t.getNewValue());
+            edit(payment);
+        });
 
         paymentTable.setItems(data);
         paymentTable.getColumns().addAll(idCol, priceCol, typeCol);

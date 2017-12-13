@@ -6,9 +6,13 @@ import com.project.dto.PackageDimension;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.NumberStringConverter;
 
 public class TablePackageDimensionHelper implements TableHelper<PackageDimension> {
 
@@ -37,13 +41,22 @@ public class TablePackageDimensionHelper implements TableHelper<PackageDimension
         TableColumn maxWeightCol = new TableColumn("Max weight");
         maxWeightCol.setMinWidth(50);
         maxWeightCol.setCellValueFactory(new PropertyValueFactory<PackageDimension, Double>("maxWeight"));
-        // TODO load edit handler
+        maxWeightCol.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        maxWeightCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<PackageDimension, Double>>) t -> {
+            PackageDimension packageDimension = t.getTableView().getItems().get(t.getTablePosition().getRow());
+            packageDimension.setMaxWeight(t.getNewValue());
+            edit(packageDimension);
+        });
 
         TableColumn maxVolumeCol = new TableColumn("Max volume");
         maxVolumeCol.setMinWidth(50);
         maxVolumeCol.setCellValueFactory(new PropertyValueFactory<PackageDimension, Double>("maxVolume"));
-        // TODO load edit handler
-
+        maxVolumeCol.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        maxVolumeCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<PackageDimension, Double>>) t -> {
+            PackageDimension packageDimension = t.getTableView().getItems().get(t.getTablePosition().getRow());
+            packageDimension.setMaxVolume(t.getNewValue());
+            edit(packageDimension);
+        });
         packageDimensionTable.setItems(data);
         packageDimensionTable.getColumns().addAll(categoryCol, maxWeightCol, maxVolumeCol);
     }

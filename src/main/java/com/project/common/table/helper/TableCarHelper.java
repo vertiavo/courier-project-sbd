@@ -11,6 +11,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.StringConverter;
+import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.NumberStringConverter;
 
 public class TableCarHelper implements TableHelper<Car> {
 
@@ -40,36 +43,43 @@ public class TableCarHelper implements TableHelper<Car> {
         brandCol.setMinWidth(100);
         brandCol.setCellValueFactory(new PropertyValueFactory<Car, String>("brand"));
         brandCol.setCellFactory(TextFieldTableCell.forTableColumn());
-        brandCol.setOnEditCommit(
-                (EventHandler<TableColumn.CellEditEvent<Car, String>>) t -> {
-                    Car car = t.getTableView().getItems().get(t.getTablePosition().getRow());
-                    car.setBrand(t.getNewValue());
-                    edit(car);
-                }
-        );
+        brandCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Car, String>>) t -> {
+            Car car = t.getTableView().getItems().get(t.getTablePosition().getRow());
+            car.setBrand(t.getNewValue());
+            edit(car);
+        });
 
         TableColumn modelCol = new TableColumn("Model");
         modelCol.setMinWidth(100);
         modelCol.setCellValueFactory(new PropertyValueFactory<Car, String>("model"));
         modelCol.setCellFactory(TextFieldTableCell.forTableColumn());
-        modelCol.setOnEditCommit(
-                (EventHandler<TableColumn.CellEditEvent<Car, String>>) t -> {
-                    Car car = t.getTableView().getItems().get(t.getTablePosition().getRow());
-                    car.setModel(t.getNewValue());
-                    edit(car);
-                }
-        );
+        modelCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Car, String>>) t -> {
+            Car car = t.getTableView().getItems().get(t.getTablePosition().getRow());
+            car.setModel(t.getNewValue());
+            edit(car);
+        });
 
         TableColumn loadCol = new TableColumn("Load");
         loadCol.setMinWidth(50);
         loadCol.setCellValueFactory(new PropertyValueFactory<Car, Double>("load"));
-        // TODO load edit handler
+        loadCol.setCellFactory(TextFieldTableCell.<Car, Double>forTableColumn(new DoubleStringConverter()));
+        loadCol.setEditable(true);
+        loadCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Car, Double>>) t -> {
+            Car car = t.getTableView().getItems().get(t.getTablePosition().getRow());
+            car.setLoad(t.getNewValue());
+            edit(car);
+        });
 
         TableColumn capacityCol = new TableColumn("Capacity");
         capacityCol.setMinWidth(50);
         capacityCol.setCellValueFactory(new PropertyValueFactory<Car, Double>("capacity"));
-        // TODO capacity edit handler
-
+        capacityCol.setCellFactory(TextFieldTableCell.<Car, Double>forTableColumn(new DoubleStringConverter()));
+        capacityCol.setEditable(true);
+        capacityCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Car, Double>>) t -> {
+            Car car = t.getTableView().getItems().get(t.getTablePosition().getRow());
+            car.setCapacity(t.getNewValue());
+            edit(car);
+        });
         carTable.setItems(data);
         carTable.getColumns().addAll(idCol, brandCol, modelCol, loadCol, capacityCol);
     }
