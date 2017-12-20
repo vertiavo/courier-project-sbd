@@ -44,7 +44,7 @@ public class TableRecipientHelper implements TableHelper<Recipient> {
         nameCol.setCellValueFactory(new PropertyValueFactory<Recipient, String>("name"));
         nameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         nameCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Recipient, String>>) t -> {
-            if (FieldValidator.validate(t.getNewValue())) {
+            if (FieldValidator.validateText(t.getNewValue())) {
                 Recipient recipient = t.getTableView().getItems().get(t.getTablePosition().getRow());
                 recipient.setName(t.getNewValue().toUpperCase());
                 edit(recipient);
@@ -58,7 +58,7 @@ public class TableRecipientHelper implements TableHelper<Recipient> {
         surnameCol.setCellValueFactory(new PropertyValueFactory<Recipient, String>("surname"));
         surnameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         surnameCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Recipient, String>>) t -> {
-            if (FieldValidator.validate(t.getNewValue())) {
+            if (FieldValidator.validateText(t.getNewValue())) {
                 Recipient recipient = t.getTableView().getItems().get(t.getTablePosition().getRow());
                 recipient.setSurname(t.getNewValue().toUpperCase());
                 edit(recipient);

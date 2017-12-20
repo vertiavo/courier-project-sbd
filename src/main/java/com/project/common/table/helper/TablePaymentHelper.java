@@ -54,7 +54,7 @@ public class TablePaymentHelper implements TableHelper<Payment> {
         typeCol.setCellValueFactory(new PropertyValueFactory<Payment, String>("type"));
         typeCol.setCellFactory(TextFieldTableCell.forTableColumn());
         typeCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Payment, String>>) t -> {
-            if (FieldValidator.validate(t.getNewValue())) {
+            if (FieldValidator.validateText(t.getNewValue())) {
                 Payment payment = t.getTableView().getItems().get(t.getTablePosition().getRow());
                 payment.setType(t.getNewValue().toUpperCase());
                 edit(payment);

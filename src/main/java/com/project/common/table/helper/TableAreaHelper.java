@@ -44,7 +44,7 @@ public class TableAreaHelper implements TableHelper<Area> {
         nameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         nameCol.setOnEditCommit(
                 (EventHandler<TableColumn.CellEditEvent<Area, String>>) t -> {
-                    if (FieldValidator.validate(t.getNewValue())) {
+                    if (FieldValidator.validateText(t.getNewValue())) {
                         Area area = t.getTableView().getItems().get(t.getTablePosition().getRow());
                         area.setName(t.getNewValue().toUpperCase());
                         edit(area);

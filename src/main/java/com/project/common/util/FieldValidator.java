@@ -10,7 +10,7 @@ public class FieldValidator {
 
     private FieldValidator() { }
 
-    public static boolean validate(String text) {
+    public static boolean validateText(String text) {
         if (text.equals(EMPTY) || text.equals(SPACE)) {
             return false;
         }
@@ -19,6 +19,17 @@ public class FieldValidator {
         Matcher matcher = pattern.matcher(text);
 
         return !matcher.find();
+    }
+
+    public static boolean validateDouble(String text) {
+        if (text.equals(EMPTY) || text.equals(SPACE)) {
+            return false;
+        }
+
+        Pattern pattern = Pattern.compile("\\d+\\.\\d+");
+        Matcher matcher = pattern.matcher(text);
+
+        return matcher.find();
     }
 
 }

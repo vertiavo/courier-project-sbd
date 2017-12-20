@@ -44,7 +44,7 @@ public class TableCarHelper implements TableHelper<Car> {
         brandCol.setCellValueFactory(new PropertyValueFactory<Car, String>("brand"));
         brandCol.setCellFactory(TextFieldTableCell.forTableColumn());
         brandCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Car, String>>) t -> {
-            if (FieldValidator.validate(t.getNewValue().toUpperCase())) {
+            if (FieldValidator.validateText(t.getNewValue().toUpperCase())) {
                 Car car = t.getTableView().getItems().get(t.getTablePosition().getRow());
                 car.setBrand(t.getNewValue());
                 edit(car);
@@ -59,7 +59,7 @@ public class TableCarHelper implements TableHelper<Car> {
         modelCol.setCellFactory(TextFieldTableCell.forTableColumn());
         modelCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Car, String>>) t -> {
             Car car = t.getTableView().getItems().get(t.getTablePosition().getRow());
-            if (FieldValidator.validate(t.getNewValue().toUpperCase())) {
+            if (FieldValidator.validateText(t.getNewValue().toUpperCase())) {
                 car.setModel(t.getNewValue());
                 edit(car);
             } else {

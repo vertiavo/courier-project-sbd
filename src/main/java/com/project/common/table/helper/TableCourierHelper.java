@@ -44,7 +44,7 @@ public class TableCourierHelper implements TableHelper<Courier> {
         nameCol.setCellValueFactory(new PropertyValueFactory<Courier, String>("name"));
         nameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         nameCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Courier, String>>) t -> {
-            if (FieldValidator.validate(t.getNewValue())) {
+            if (FieldValidator.validateText(t.getNewValue())) {
                 Courier courier = t.getTableView().getItems().get(t.getTablePosition().getRow());
                 courier.setName(t.getNewValue().toUpperCase());
                 edit(courier);
@@ -58,7 +58,7 @@ public class TableCourierHelper implements TableHelper<Courier> {
         surnameCol.setCellValueFactory(new PropertyValueFactory<Courier, String>("surname"));
         surnameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         surnameCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Courier, String>>) t -> {
-            if (FieldValidator.validate(t.getNewValue())) {
+            if (FieldValidator.validateText(t.getNewValue())) {
                 Courier courier = t.getTableView().getItems().get(t.getTablePosition().getRow());
                 courier.setSurname(t.getNewValue().toUpperCase());
                 edit(courier);

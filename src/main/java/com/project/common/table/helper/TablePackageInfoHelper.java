@@ -43,7 +43,7 @@ public class TablePackageInfoHelper implements TableHelper<PackageInfo> {
         vulnerabilityCol.setCellFactory(TextFieldTableCell.forTableColumn());
         vulnerabilityCol.setOnEditCommit(
                 (EventHandler<TableColumn.CellEditEvent<PackageInfo, String>>) t -> {
-                    if (FieldValidator.validate(t.getNewValue())) {
+                    if (FieldValidator.validateText(t.getNewValue())) {
                         PackageInfo packageInfo = t.getTableView().getItems().get(t.getTablePosition().getRow());
                         packageInfo.setVulnerability(t.getNewValue().toUpperCase());
                         edit(packageInfo);
