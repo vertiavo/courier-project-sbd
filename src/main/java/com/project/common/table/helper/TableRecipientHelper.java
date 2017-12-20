@@ -1,5 +1,7 @@
 package com.project.common.table.helper;
 
+import com.project.common.util.AlertDialog;
+import com.project.common.util.FieldValidator;
 import com.project.dao.RecipientDao;
 import com.project.dao.jpa.RecipientJpaDao;
 import com.project.dto.Recipient;
@@ -42,9 +44,13 @@ public class TableRecipientHelper implements TableHelper<Recipient> {
         nameCol.setCellValueFactory(new PropertyValueFactory<Recipient, String>("name"));
         nameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         nameCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Recipient, String>>) t -> {
-            Recipient recipient = t.getTableView().getItems().get(t.getTablePosition().getRow());
-            recipient.setName(t.getNewValue());
-            edit(recipient);
+            if (FieldValidator.validate(t.getNewValue())) {
+                Recipient recipient = t.getTableView().getItems().get(t.getTablePosition().getRow());
+                recipient.setName(t.getNewValue().toUpperCase());
+                edit(recipient);
+            } else {
+                AlertDialog.display("Error", "Invalid value");
+            }
         });
 
         TableColumn surnameCol = new TableColumn("Surname");
@@ -52,9 +58,13 @@ public class TableRecipientHelper implements TableHelper<Recipient> {
         surnameCol.setCellValueFactory(new PropertyValueFactory<Recipient, String>("surname"));
         surnameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         surnameCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Recipient, String>>) t -> {
-            Recipient recipient = t.getTableView().getItems().get(t.getTablePosition().getRow());
-            recipient.setSurname(t.getNewValue());
-            edit(recipient);
+            if (FieldValidator.validate(t.getNewValue())) {
+                Recipient recipient = t.getTableView().getItems().get(t.getTablePosition().getRow());
+                recipient.setSurname(t.getNewValue().toUpperCase());
+                edit(recipient);
+            } else {
+                AlertDialog.display("Error", "Invalid value");
+            }
         });
 
         TableColumn addressCol = new TableColumn("Address");

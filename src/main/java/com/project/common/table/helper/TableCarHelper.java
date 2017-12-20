@@ -1,5 +1,7 @@
 package com.project.common.table.helper;
 
+import com.project.common.util.AlertDialog;
+import com.project.common.util.FieldValidator;
 import com.project.dao.CarDao;
 import com.project.dao.jpa.CarJpaDao;
 import com.project.dto.Car;
@@ -11,9 +13,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.util.StringConverter;
 import javafx.util.converter.DoubleStringConverter;
-import javafx.util.converter.NumberStringConverter;
 
 public class TableCarHelper implements TableHelper<Car> {
 
@@ -44,9 +44,13 @@ public class TableCarHelper implements TableHelper<Car> {
         brandCol.setCellValueFactory(new PropertyValueFactory<Car, String>("brand"));
         brandCol.setCellFactory(TextFieldTableCell.forTableColumn());
         brandCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Car, String>>) t -> {
-            Car car = t.getTableView().getItems().get(t.getTablePosition().getRow());
-            car.setBrand(t.getNewValue());
-            edit(car);
+            if (FieldValidator.validate(t.getNewValue().toUpperCase())) {
+                Car car = t.getTableView().getItems().get(t.getTablePosition().getRow());
+                car.setBrand(t.getNewValue());
+                edit(car);
+            } else {
+                AlertDialog.display("Error", "Invalid value");
+            }
         });
 
         TableColumn modelCol = new TableColumn("Model");
@@ -55,8 +59,12 @@ public class TableCarHelper implements TableHelper<Car> {
         modelCol.setCellFactory(TextFieldTableCell.forTableColumn());
         modelCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Car, String>>) t -> {
             Car car = t.getTableView().getItems().get(t.getTablePosition().getRow());
-            car.setModel(t.getNewValue());
-            edit(car);
+            if (FieldValidator.validate(t.getNewValue().toUpperCase())) {
+                car.setModel(t.getNewValue());
+                edit(car);
+            } else {
+                AlertDialog.display("Error", "Invalid value");
+            }
         });
 
         TableColumn loadCol = new TableColumn("Load");
@@ -80,6 +88,7 @@ public class TableCarHelper implements TableHelper<Car> {
             car.setCapacity(t.getNewValue());
             edit(car);
         });
+
         carTable.setItems(data);
         carTable.getColumns().addAll(idCol, brandCol, modelCol, loadCol, capacityCol);
     }

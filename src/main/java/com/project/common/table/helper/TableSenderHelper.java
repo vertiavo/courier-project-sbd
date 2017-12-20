@@ -1,5 +1,7 @@
 package com.project.common.table.helper;
 
+import com.project.common.util.AlertDialog;
+import com.project.common.util.FieldValidator;
 import com.project.dao.SenderDao;
 import com.project.dao.jpa.SenderJpaDao;
 import com.project.dto.Sender;
@@ -42,9 +44,13 @@ public class TableSenderHelper implements TableHelper<Sender> {
         nameCol.setCellValueFactory(new PropertyValueFactory<Sender, String>("name"));
         nameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         nameCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Sender, String>>) t -> {
-            Sender sender = t.getTableView().getItems().get(t.getTablePosition().getRow());
-            sender.setName(t.getNewValue());
-            edit(sender);
+            if (FieldValidator.validate(t.getNewValue())) {
+                Sender sender = t.getTableView().getItems().get(t.getTablePosition().getRow());
+                sender.setName(t.getNewValue().toUpperCase());
+                edit(sender);
+            } else {
+                AlertDialog.display("Error", "Invalid value");
+            }
         });
 
         TableColumn surnameCol = new TableColumn("Surname");
@@ -52,9 +58,13 @@ public class TableSenderHelper implements TableHelper<Sender> {
         surnameCol.setCellValueFactory(new PropertyValueFactory<Sender, String>("surname"));
         surnameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         surnameCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Sender, String>>) t -> {
-            Sender sender = t.getTableView().getItems().get(t.getTablePosition().getRow());
-            sender.setSurname(t.getNewValue());
-            edit(sender);
+            if (FieldValidator.validate(t.getNewValue())) {
+                Sender sender = t.getTableView().getItems().get(t.getTablePosition().getRow());
+                sender.setSurname(t.getNewValue().toUpperCase());
+                edit(sender);
+            } else {
+                AlertDialog.display("Error", "Invalid value");
+            }
         });
 
         TableColumn addressCol = new TableColumn("Address");

@@ -1,5 +1,7 @@
 package com.project.common.table.helper;
 
+import com.project.common.util.AlertDialog;
+import com.project.common.util.FieldValidator;
 import com.project.dao.CourierDao;
 import com.project.dao.jpa.CourierJpaDao;
 import com.project.dto.Courier;
@@ -42,9 +44,13 @@ public class TableCourierHelper implements TableHelper<Courier> {
         nameCol.setCellValueFactory(new PropertyValueFactory<Courier, String>("name"));
         nameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         nameCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Courier, String>>) t -> {
-            Courier courier = t.getTableView().getItems().get(t.getTablePosition().getRow());
-            courier.setName(t.getNewValue());
-            edit(courier);
+            if (FieldValidator.validate(t.getNewValue())) {
+                Courier courier = t.getTableView().getItems().get(t.getTablePosition().getRow());
+                courier.setName(t.getNewValue().toUpperCase());
+                edit(courier);
+            } else {
+                AlertDialog.display("Error", "Invalid value");
+            }
         });
 
         TableColumn surnameCol = new TableColumn("Surname");
@@ -52,9 +58,13 @@ public class TableCourierHelper implements TableHelper<Courier> {
         surnameCol.setCellValueFactory(new PropertyValueFactory<Courier, String>("surname"));
         surnameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         surnameCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Courier, String>>) t -> {
-            Courier courier = t.getTableView().getItems().get(t.getTablePosition().getRow());
-            courier.setSurname(t.getNewValue());
-            edit(courier);
+            if (FieldValidator.validate(t.getNewValue())) {
+                Courier courier = t.getTableView().getItems().get(t.getTablePosition().getRow());
+                courier.setSurname(t.getNewValue().toUpperCase());
+                edit(courier);
+            } else {
+                AlertDialog.display("Error", "Invalid value");
+            }
         });
 
         TableColumn addressCol = new TableColumn("Address");

@@ -1,5 +1,6 @@
 package com.project.common.table.helper;
 
+import com.project.common.util.FieldValidator;
 import com.project.dao.PackageInfoDao;
 import com.project.dao.jpa.PackageInfoJpaDao;
 import com.project.dto.PackageInfo;
@@ -42,9 +43,11 @@ public class TablePackageInfoHelper implements TableHelper<PackageInfo> {
         vulnerabilityCol.setCellFactory(TextFieldTableCell.forTableColumn());
         vulnerabilityCol.setOnEditCommit(
                 (EventHandler<TableColumn.CellEditEvent<PackageInfo, String>>) t -> {
-                    PackageInfo packageInfo = t.getTableView().getItems().get(t.getTablePosition().getRow());
-                    packageInfo.setVulnerability(t.getNewValue());
-                    edit(packageInfo);
+                    if (FieldValidator.validate(t.getNewValue())) {
+                        PackageInfo packageInfo = t.getTableView().getItems().get(t.getTablePosition().getRow());
+                        packageInfo.setVulnerability(t.getNewValue().toUpperCase());
+                        edit(packageInfo);
+                    }
                 }
         );
 

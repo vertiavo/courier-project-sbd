@@ -1,5 +1,7 @@
 package com.project.common.table.helper;
 
+import com.project.common.util.AlertDialog;
+import com.project.common.util.FieldValidator;
 import com.project.dao.PaymentDao;
 import com.project.dao.jpa.PaymentJpaDao;
 import com.project.dto.Payment;
@@ -52,9 +54,13 @@ public class TablePaymentHelper implements TableHelper<Payment> {
         typeCol.setCellValueFactory(new PropertyValueFactory<Payment, String>("type"));
         typeCol.setCellFactory(TextFieldTableCell.forTableColumn());
         typeCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Payment, String>>) t -> {
-            Payment payment = t.getTableView().getItems().get(t.getTablePosition().getRow());
-            payment.setType(t.getNewValue());
-            edit(payment);
+            if (FieldValidator.validate(t.getNewValue())) {
+                Payment payment = t.getTableView().getItems().get(t.getTablePosition().getRow());
+                payment.setType(t.getNewValue().toUpperCase());
+                edit(payment);
+            } else {
+                AlertDialog.display("Error", "Invalid value");
+            }
         });
 
         paymentTable.setItems(data);

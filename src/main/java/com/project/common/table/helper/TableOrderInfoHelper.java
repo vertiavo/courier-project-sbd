@@ -64,7 +64,6 @@ public class TableOrderInfoHelper implements TableHelper<OrderInfo> {
         TableColumn orderDateCol = new TableColumn("Order date");
         orderDateCol.setMinWidth(150);
         orderDateCol.setCellValueFactory(new PropertyValueFactory<OrderInfo, Date>("orderDate"));
-        // TODO datepicker or simple date edit
 
         orderInfoTable.setItems(data);
         orderInfoTable.getColumns().addAll(idOrderCol, idSenderCol, idRecipientCol, idCourierCol, idPackageCol, idPaymentCol, orderDateCol);

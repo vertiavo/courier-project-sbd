@@ -1,5 +1,7 @@
 package com.project.common.table.helper;
 
+import com.project.common.util.AlertDialog;
+import com.project.common.util.FieldValidator;
 import com.project.dao.AreaDao;
 import com.project.dao.jpa.AreaJpaDao;
 import com.project.dto.Area;
@@ -42,9 +44,13 @@ public class TableAreaHelper implements TableHelper<Area> {
         nameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         nameCol.setOnEditCommit(
                 (EventHandler<TableColumn.CellEditEvent<Area, String>>) t -> {
-                    Area area = t.getTableView().getItems().get(t.getTablePosition().getRow());
-                    area.setName(t.getNewValue());
-                    edit(area);
+                    if (FieldValidator.validate(t.getNewValue())) {
+                        Area area = t.getTableView().getItems().get(t.getTablePosition().getRow());
+                        area.setName(t.getNewValue().toUpperCase());
+                        edit(area);
+                    } else {
+                        AlertDialog.display("Error", "Invalid value");
+                    }
                 }
         );
 
