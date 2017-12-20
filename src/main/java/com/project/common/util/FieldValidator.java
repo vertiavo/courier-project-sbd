@@ -26,7 +26,7 @@ public class FieldValidator {
             return false;
         }
 
-        Pattern pattern = Pattern.compile("\\d+\\.\\d+");
+        Pattern pattern = Pattern.compile("^\\d+\\.\\d+$");
         Matcher matcher = pattern.matcher(text);
 
         return matcher.find();
