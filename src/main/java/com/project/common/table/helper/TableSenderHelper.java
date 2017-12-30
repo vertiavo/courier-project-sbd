@@ -15,6 +15,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.NumberStringConverter;
 
+import java.util.List;
+
+@SuppressWarnings("unchecked")
 public class TableSenderHelper implements TableHelper<Sender> {
 
     private final ObservableList<Sender> data;
@@ -96,15 +99,22 @@ public class TableSenderHelper implements TableHelper<Sender> {
         senderTable.getColumns().addAll(idCol, nameCol, surnameCol, addressCol, offerTypeCol, nipCol);
     }
 
+    @Override
     public void add(Sender sender) {
         senderDao.save(sender);
         data.add(sender);
+    }
+
+    @Override
+    public void add(List<String> items) {
+        throw new UnsupportedOperationException("Adding new Sender not supported!");
     }
 
     private void edit(Sender sender) {
         senderDao.update(sender);
     }
 
+    @Override
     public void delete(Sender sender) {
         senderDao.delete(sender);
         data.remove(sender);

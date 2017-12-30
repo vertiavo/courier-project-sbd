@@ -15,6 +15,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.NumberStringConverter;
 
+import java.util.List;
+
+@SuppressWarnings("unchecked")
 public class TableCourierHelper implements TableHelper<Courier> {
 
     private final ObservableList<Courier> data;
@@ -90,7 +93,19 @@ public class TableCourierHelper implements TableHelper<Courier> {
         courierTable.getColumns().addAll(idCol, nameCol, surnameCol, addressCol, phoneNumberCol);
     }
 
+    @Override
     public void add(Courier courier) {
+        courierDao.save(courier);
+        data.add(courier);
+    }
+
+    @Override
+    public void add(List<String> items) {
+        Courier courier = new Courier(
+                items.get(0),
+                items.get(1),
+                items.get(2),
+                Integer.valueOf(items.get(3)));
         courierDao.save(courier);
         data.add(courier);
     }
@@ -99,6 +114,7 @@ public class TableCourierHelper implements TableHelper<Courier> {
         courierDao.update(courier);
     }
 
+    @Override
     public void delete(Courier courier) {
         courierDao.delete(courier);
         data.remove(courier);

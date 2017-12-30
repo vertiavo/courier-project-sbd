@@ -14,6 +14,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 
+import java.util.List;
+
+@SuppressWarnings("unchecked")
 public class TableAreaHelper implements TableHelper<Area> {
 
     private final ObservableList<Area> data;
@@ -58,7 +61,15 @@ public class TableAreaHelper implements TableHelper<Area> {
         areaTable.getColumns().addAll(idCol, nameCol);
     }
 
+    @Override
     public void add(Area area) {
+        areaDao.save(area);
+        data.add(area);
+    }
+
+    @Override
+    public void add(List<String> items) {
+        Area area = new Area(items.get(0));
         areaDao.save(area);
         data.add(area);
     }
@@ -67,6 +78,7 @@ public class TableAreaHelper implements TableHelper<Area> {
         areaDao.update(area);
     }
 
+    @Override
     public void delete(Area area) {
         areaDao.delete(area);
         data.remove(area);

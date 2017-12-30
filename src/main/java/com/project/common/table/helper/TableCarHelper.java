@@ -15,6 +15,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.DoubleStringConverter;
 
+import java.util.List;
+
+@SuppressWarnings("unchecked")
 public class TableCarHelper implements TableHelper<Car> {
 
     private final ObservableList<Car> data;
@@ -93,7 +96,19 @@ public class TableCarHelper implements TableHelper<Car> {
         carTable.getColumns().addAll(idCol, brandCol, modelCol, loadCol, capacityCol);
     }
 
+    @Override
     public void add(Car car) {
+        carDao.save(car);
+        data.add(car);
+    }
+
+    @Override
+    public void add(List<String> items) {
+        Car car = new Car(
+                items.get(0),
+                items.get(1),
+                Double.valueOf(items.get(2)),
+                Double.valueOf(items.get(3)));
         carDao.save(car);
         data.add(car);
     }
@@ -102,6 +117,7 @@ public class TableCarHelper implements TableHelper<Car> {
         carDao.update(car);
     }
 
+    @Override
     public void delete(Car car) {
         carDao.delete(car);
         data.remove(car);

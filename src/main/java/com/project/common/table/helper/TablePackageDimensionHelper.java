@@ -12,8 +12,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.DoubleStringConverter;
-import javafx.util.converter.NumberStringConverter;
 
+import java.util.List;
+
+@SuppressWarnings("unchecked")
 public class TablePackageDimensionHelper implements TableHelper<PackageDimension> {
 
     private final ObservableList<PackageDimension> data;
@@ -61,7 +63,18 @@ public class TablePackageDimensionHelper implements TableHelper<PackageDimension
         packageDimensionTable.getColumns().addAll(categoryCol, maxWeightCol, maxVolumeCol);
     }
 
+    @Override
     public void add(PackageDimension packageDimension) {
+        packageDimensionDao.save(packageDimension);
+        data.add(packageDimension);
+    }
+
+    @Override
+    public void add(List<String> items) {
+        PackageDimension packageDimension = new PackageDimension(
+                items.get(0),
+                Double.valueOf(items.get(1)),
+                Double.valueOf(items.get(2)));
         packageDimensionDao.save(packageDimension);
         data.add(packageDimension);
     }
@@ -70,6 +83,7 @@ public class TablePackageDimensionHelper implements TableHelper<PackageDimension
         packageDimensionDao.update(packageDimension);
     }
 
+    @Override
     public void delete(PackageDimension packageDimension) {
         packageDimensionDao.delete(packageDimension);
         data.remove(packageDimension);

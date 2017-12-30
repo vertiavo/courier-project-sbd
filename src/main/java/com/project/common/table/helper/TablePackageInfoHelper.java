@@ -13,6 +13,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 
+import java.util.List;
+
+@SuppressWarnings("unchecked")
 public class TablePackageInfoHelper implements TableHelper<PackageInfo> {
 
     private final ObservableList<PackageInfo> data;
@@ -60,15 +63,22 @@ public class TablePackageInfoHelper implements TableHelper<PackageInfo> {
         packageInfoTable.getColumns().addAll(idCol, vulnerabilityCol, categoryCol);
     }
 
+    @Override
     public void add(PackageInfo packageInfo) {
         packageInfoDao.save(packageInfo);
         data.add(packageInfo);
+    }
+
+    @Override
+    public void add(List<String> items) {
+        throw new UnsupportedOperationException("Adding new PackageInfo not supported!");
     }
 
     private void edit(PackageInfo packageInfo) {
         packageInfoDao.update(packageInfo);
     }
 
+    @Override
     public void delete(PackageInfo packageInfo) {
         packageInfoDao.delete(packageInfo);
         data.remove(packageInfo);

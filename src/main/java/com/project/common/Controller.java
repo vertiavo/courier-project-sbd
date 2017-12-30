@@ -13,6 +13,7 @@ import com.project.common.table.helper.TablePaymentHelper;
 import com.project.common.table.helper.TableRecipientHelper;
 import com.project.common.table.helper.TableSenderHelper;
 
+import com.project.common.util.FormDialog;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,6 +22,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -51,8 +55,15 @@ public class Controller implements Initializable {
 
     private TableHelper helper;
 
+    private List<String> fields;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        fields = new ArrayList<>();
+
+        newButton.setVisible(false);
+        deleteButton.setVisible(false);
+
         setListItems();
         setListClickEvent();
     }
@@ -79,39 +90,76 @@ public class Controller implements Initializable {
             switch (selectedItem) {
                 case AREA:
                     helper = new TableAreaHelper(table);
+                    fields.clear();
+                    fields.addAll(Arrays.asList("Name"));
                     break;
                 case CAR:
                     helper = new TableCarHelper(table);
+                    fields.clear();
+                    fields.addAll(Arrays.asList("Brand", "Model", "Load", "Capacity"));
                     break;
                 case COURIER:
                     helper = new TableCourierHelper(table);
+                    fields.clear();
+                    fields.addAll(Arrays.asList("Name", "Surname", "Address", "Phone number"));
                     break;
                 case COURIER_CAR_AREA:
                     helper = new TableCourierCarAreaHelper(table);
+                    fields.clear();
+                    fields.addAll(Arrays.asList("Courier ID", "Car ID", "Area ID", "Begin date", "End date"));
                     break;
                 case OFFER:
                     helper = new TableOfferHelper(table);
+                    fields.clear();
+                    fields.addAll(Arrays.asList("Offer type", "Discount"));
                     break;
                 case ORDER_INFO:
                     helper = new TableOrderInfoHelper(table);
+                    fields.clear();
+                    fields.addAll(Arrays.asList("Sender", "Recipient", "Courier", "Package", "Payment"));
                     break;
                 case PACKAGE_DIMENSION:
                     helper = new TablePackageDimensionHelper(table);
+                    fields.clear();
+                    fields.addAll(Arrays.asList("Category", "Max weight", "Max Volume"));
                     break;
                 case PACKAGE_INFO:
                     helper = new TablePackageInfoHelper(table);
+                    fields.clear();
+                    fields.addAll(Arrays.asList("Vulnerability", "Category"));
                     break;
                 case PAYMENT:
                     helper = new TablePaymentHelper(table);
+                    fields.clear();
+                    fields.addAll(Arrays.asList("Price", "Type"));
                     break;
                 case RECIPIENT:
                     helper = new TableRecipientHelper(table);
+                    fields.clear();
+                    fields.addAll(Arrays.asList("Name", "Surname", "Address", "Phone number"));
                     break;
                 case SENDER:
                     helper = new TableSenderHelper(table);
+                    fields.clear();
+                    fields.addAll(Arrays.asList("Name", "Surname", "Address", "Offer type", "NIP"));
                     break;
                 default:
                     break;
+            }
+            if (!newButton.isVisible()) {
+                newButton.setVisible(true);
+                deleteButton.setVisible(true);
+                setNewButtonClickEvent();
+            }
+        });
+    }
+
+    private void setNewButtonClickEvent() {
+        List<String> inputValues = fields;
+        newButton.setOnAction(e -> {
+            FormDialog.display(inputValues);
+            if (!inputValues.isEmpty()) {
+                helper.add(inputValues);
             }
         });
     }

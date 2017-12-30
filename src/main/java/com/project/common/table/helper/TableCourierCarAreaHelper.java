@@ -14,7 +14,9 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.DateStringConverter;
 
 import java.util.Date;
+import java.util.List;
 
+@SuppressWarnings("unchecked")
 public class TableCourierCarAreaHelper implements TableHelper<CourierCarArea> {
 
     private final ObservableList<CourierCarArea> data;
@@ -63,15 +65,22 @@ public class TableCourierCarAreaHelper implements TableHelper<CourierCarArea> {
         courierCarAreaTable.getColumns().addAll(idCourierCol, idCarCol, idAreaCol, endDaterCol);
     }
 
+    @Override
     public void add(CourierCarArea courierCarArea) {
         courierCarAreaDao.save(courierCarArea);
         data.add(courierCarArea);
+    }
+
+    @Override
+    public void add(List<String> items) {
+        throw new UnsupportedOperationException("Adding new CourierCarArea not supported!");
     }
 
     private void edit(CourierCarArea courierCarArea) {
         courierCarAreaDao.update(courierCarArea);
     }
 
+    @Override
     public void delete(CourierCarArea courierCarArea) {
         courierCarAreaDao.delete(courierCarArea);
         data.remove(courierCarArea);

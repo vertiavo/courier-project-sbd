@@ -15,6 +15,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.DoubleStringConverter;
 
+import java.util.List;
+
+@SuppressWarnings("unchecked")
 public class TablePaymentHelper implements TableHelper<Payment> {
 
     private final ObservableList<Payment> data;
@@ -67,7 +70,15 @@ public class TablePaymentHelper implements TableHelper<Payment> {
         paymentTable.getColumns().addAll(idCol, priceCol, typeCol);
     }
 
+    @Override
     public void add(Payment payment) {
+        paymentDao.save(payment);
+        data.add(payment);
+    }
+
+    @Override
+    public void add(List<String> items) {
+        Payment payment = new Payment(Double.valueOf(items.get(0)), items.get(0));
         paymentDao.save(payment);
         data.add(payment);
     }
@@ -76,6 +87,7 @@ public class TablePaymentHelper implements TableHelper<Payment> {
         paymentDao.update(payment);
     }
 
+    @Override
     public void delete(Payment payment) {
         paymentDao.delete(payment);
         data.remove(payment);

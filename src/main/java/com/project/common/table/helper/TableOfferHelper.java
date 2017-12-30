@@ -2,7 +2,6 @@ package com.project.common.table.helper;
 
 import com.project.dao.OfferDao;
 import com.project.dao.jpa.OfferJpaDao;
-import com.project.dto.Courier;
 import com.project.dto.Offer;
 
 import javafx.collections.FXCollections;
@@ -14,6 +13,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.NumberStringConverter;
 
+import java.util.List;
+
+@SuppressWarnings("unchecked")
 public class TableOfferHelper implements TableHelper<Offer> {
 
     private final ObservableList<Offer> data;
@@ -51,7 +53,15 @@ public class TableOfferHelper implements TableHelper<Offer> {
         offerTable.getColumns().addAll(offerTypeCol, discountCol);
     }
 
+    @Override
     public void add(Offer offer) {
+        offerDao.save(offer);
+        data.add(offer);
+    }
+
+    @Override
+    public void add(List<String> items) {
+        Offer offer = new Offer(items.get(0), Integer.valueOf(items.get(1)));
         offerDao.save(offer);
         data.add(offer);
     }
@@ -60,6 +70,7 @@ public class TableOfferHelper implements TableHelper<Offer> {
         offerDao.update(offer);
     }
 
+    @Override
     public void delete(Offer offer) {
         offerDao.delete(offer);
         data.remove(offer);

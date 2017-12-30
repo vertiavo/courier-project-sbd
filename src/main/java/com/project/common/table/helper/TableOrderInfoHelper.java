@@ -11,7 +11,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.Date;
+import java.util.List;
 
+@SuppressWarnings("unchecked")
 public class TableOrderInfoHelper implements TableHelper<OrderInfo> {
 
     private final ObservableList<OrderInfo> data;
@@ -69,15 +71,22 @@ public class TableOrderInfoHelper implements TableHelper<OrderInfo> {
         orderInfoTable.getColumns().addAll(idOrderCol, idSenderCol, idRecipientCol, idCourierCol, idPackageCol, idPaymentCol, orderDateCol);
     }
 
+    @Override
     public void add(OrderInfo orderInfo) {
         orderInfoDao.save(orderInfo);
         data.add(orderInfo);
+    }
+
+    @Override
+    public void add(List<String> items) {
+        throw new UnsupportedOperationException("Adding new OrderInfo not supported!");
     }
 
     private void edit(OrderInfo orderInfo) {
         orderInfoDao.update(orderInfo);
     }
 
+    @Override
     public void delete(OrderInfo orderInfo) {
         orderInfoDao.delete(orderInfo);
         data.remove(orderInfo);

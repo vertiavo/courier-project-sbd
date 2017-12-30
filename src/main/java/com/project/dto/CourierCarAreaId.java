@@ -11,6 +11,8 @@ import java.util.Date;
 @Embeddable
 public class CourierCarAreaId implements Serializable {
 
+    private static final long serialVersionUID = -904491716168251443L;
+
     @OneToOne
     @JoinColumn(name = "IDCOURIER", referencedColumnName = "IDCOURIER")
     private Courier idCourier;

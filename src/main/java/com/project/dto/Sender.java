@@ -42,7 +42,7 @@ public class Sender implements Serializable {
     public Sender() {
     }
 
-    public Sender(String address, Offer offerType, String name, String surname, Integer nip) {
+    public Sender(String name, String surname, String address, Offer offerType, Integer nip) {
         this.address = address;
         this.offerType = offerType;
         this.name = name;

@@ -15,6 +15,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.NumberStringConverter;
 
+import java.util.List;
+
+@SuppressWarnings("unchecked")
 public class TableRecipientHelper implements TableHelper<Recipient> {
 
     private final ObservableList<Recipient> data;
@@ -91,7 +94,19 @@ public class TableRecipientHelper implements TableHelper<Recipient> {
         recipientTable.getColumns().addAll(idCol, nameCol, surnameCol, addressCol, phoneNumberCol);
     }
 
+    @Override
     public void add(Recipient recipient) {
+        recipientDao.save(recipient);
+        data.add(recipient);
+    }
+
+    @Override
+    public void add(List<String> items) {
+        Recipient recipient = new Recipient(
+                items.get(0),
+                items.get(1),
+                items.get(2),
+                Integer.valueOf(items.get(3)));
         recipientDao.save(recipient);
         data.add(recipient);
     }
@@ -100,6 +115,7 @@ public class TableRecipientHelper implements TableHelper<Recipient> {
         recipientDao.update(recipient);
     }
 
+    @Override
     public void delete(Recipient recipient) {
         recipientDao.delete(recipient);
         data.remove(recipient);
