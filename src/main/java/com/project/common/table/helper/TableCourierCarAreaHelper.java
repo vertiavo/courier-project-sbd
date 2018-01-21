@@ -1,8 +1,14 @@
 package com.project.common.table.helper;
 
+import com.project.dao.AreaDao;
+import com.project.dao.CarDao;
 import com.project.dao.CourierCarAreaDao;
+import com.project.dao.CourierDao;
+import com.project.dao.jpa.AreaJpaDao;
+import com.project.dao.jpa.CarJpaDao;
 import com.project.dao.jpa.CourierCarAreaJpaDao;
-import com.project.dto.CourierCarArea;
+import com.project.dao.jpa.CourierJpaDao;
+import com.project.dto.*;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,6 +19,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.DateStringConverter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -72,8 +81,33 @@ public class TableCourierCarAreaHelper implements TableHelper<CourierCarArea> {
     }
 
     @Override
-    public void add(List<String> items) {
-        throw new UnsupportedOperationException("Adding new CourierCarArea not supported!");
+    public void add(List<String> items)  {
+        CourierDao cd=new CourierJpaDao();
+        Courier courier=cd.findById(Integer.valueOf(items.get(0)));
+        CarDao carDao=new CarJpaDao();
+        Car car=carDao.findById(Integer.valueOf(items.get(1)));
+        AreaDao areaDao=new AreaJpaDao();
+        Area area=areaDao.findById(Integer.valueOf(items.get(2)));
+        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+        Date endDate=new Date();
+        Date beginDate=new Date();
+        try{
+           endDate=df.parse(items.get(4));
+           beginDate=df.parse(items.get(3));
+
+
+        }catch(Exception ex){
+            //handle this shit
+        }
+        java.sql.Date sqlBeg = new java.sql.Date(beginDate.getTime());
+        java.sql.Date sqlEnd = new java.sql.Date(endDate.getTime());
+        CourierCarAreaId cAreaId=new CourierCarAreaId(courier,sqlBeg);
+
+        CourierCarArea newCourierCarArea=new CourierCarArea(cAreaId, car,area,sqlEnd);
+
+        courierCarAreaDao.save(newCourierCarArea);
+        data.add(newCourierCarArea);
+
     }
 
     private void edit(CourierCarArea courierCarArea) {

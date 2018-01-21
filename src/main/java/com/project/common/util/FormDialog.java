@@ -9,10 +9,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
@@ -55,7 +52,11 @@ public class FormDialog {
         for (String field : fields) {
             Label label = new Label(field);
             grid.add(label, 0, rowNum);
-            if(checkIfFieldIsEntity(field)){
+            if(checkIfFieldIsDatePicker(field)){
+                DatePicker dp=new DatePicker();
+                grid.add(dp,1,rowNum);
+            }
+            else if(checkIfFieldIsEntity(field)){
                 ComboBox<ComboBoxProp>cb= new ComboBox<>();
                 cb=populateComboBox(cb,field);
                 grid.add(cb,1,rowNum);
@@ -88,6 +89,9 @@ public class FormDialog {
                    }
 
                 }
+                else if(n instanceof DatePicker){
+                    params.add(((DatePicker) n).getValue().toString());
+                }
             }
             window.close();
         });
@@ -105,6 +109,11 @@ public class FormDialog {
         window.showAndWait();
         return params;
     }
+
+    private boolean checkIfFieldIsDatePicker(String field) {
+        return (field.equals("Begin date")|| field.equals("End date"))?true:false;
+    }
+
     private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
         for (Node node : gridPane.getChildren()) {
             if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
