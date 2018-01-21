@@ -8,7 +8,8 @@ public class FieldValidator {
     private static final String EMPTY = "";
     private static final String SPACE = " ";
 
-    private FieldValidator() { }
+    private FieldValidator() {
+    }
 
     public static boolean validateText(String text) {
         if (text.equals(EMPTY) || text.equals(SPACE)) {

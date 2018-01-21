@@ -25,6 +25,24 @@ public class PackageDimension implements Serializable {
     public PackageDimension() {
     }
 
+    public PackageDimension(String category) {
+        this.category = category;
+        switch (category) {
+            case "A":
+                this.maxWeight = 0.5;
+                this.maxVolume = 0.5;
+                break;
+            case "B":
+                this.maxWeight = 3.0;
+                this.maxVolume = 3.0;
+                break;
+            case "C":
+                this.maxWeight = 6.0;
+                this.maxVolume = 6.0;
+                break;
+        }
+    }
+
     public PackageDimension(String category, Double maxWeight, Double maxVolume) {
         this.category = category;
         this.maxWeight = maxWeight;

@@ -78,7 +78,7 @@ public class TablePaymentHelper implements TableHelper<Payment> {
 
     @Override
     public void add(List<String> items) {
-        Payment payment = new Payment(Double.valueOf(items.get(0)), items.get(0));
+        Payment payment = new Payment(Double.valueOf(items.get(0)), items.get(1));
         paymentDao.save(payment);
         data.add(payment);
     }

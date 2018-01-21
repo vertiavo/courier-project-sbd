@@ -3,6 +3,7 @@ package com.project.common.table.helper;
 import com.project.common.util.FieldValidator;
 import com.project.dao.PackageInfoDao;
 import com.project.dao.jpa.PackageInfoJpaDao;
+import com.project.dto.PackageDimension;
 import com.project.dto.PackageInfo;
 
 import javafx.collections.FXCollections;
@@ -44,15 +45,13 @@ public class TablePackageInfoHelper implements TableHelper<PackageInfo> {
         vulnerabilityCol.setMinWidth(100);
         vulnerabilityCol.setCellValueFactory(new PropertyValueFactory<PackageInfo, String>("vulnerability"));
         vulnerabilityCol.setCellFactory(TextFieldTableCell.forTableColumn());
-        vulnerabilityCol.setOnEditCommit(
-                (EventHandler<TableColumn.CellEditEvent<PackageInfo, String>>) t -> {
-                    if (FieldValidator.validateText(t.getNewValue())) {
-                        PackageInfo packageInfo = t.getTableView().getItems().get(t.getTablePosition().getRow());
-                        packageInfo.setVulnerability(t.getNewValue().toUpperCase());
-                        edit(packageInfo);
-                    }
-                }
-        );
+        vulnerabilityCol.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<PackageInfo, String>>) t -> {
+            if (FieldValidator.validateText(t.getNewValue())) {
+                PackageInfo packageInfo = t.getTableView().getItems().get(t.getTablePosition().getRow());
+                packageInfo.setVulnerability(t.getNewValue().toUpperCase());
+                edit(packageInfo);
+            }
+        });
 
         TableColumn categoryCol = new TableColumn("Category");
         categoryCol.setMinWidth(100);
@@ -71,7 +70,9 @@ public class TablePackageInfoHelper implements TableHelper<PackageInfo> {
 
     @Override
     public void add(List<String> items) {
-        throw new UnsupportedOperationException("Adding new PackageInfo not supported!");
+        PackageInfo packageInfo = new PackageInfo(items.get(0), new PackageDimension(items.get(1)));
+        packageInfoDao.save(packageInfo);
+        data.add(packageInfo);
     }
 
     private void edit(PackageInfo packageInfo) {
@@ -86,7 +87,7 @@ public class TablePackageInfoHelper implements TableHelper<PackageInfo> {
 
     @Override
     public void delete(String pk) {
-        PackageInfo packageInfo=packageInfoDao.findById(Integer.valueOf(pk));
+        PackageInfo packageInfo = packageInfoDao.findById(Integer.valueOf(pk));
         packageInfoDao.delete(packageInfo);
         data.remove(packageInfo);
     }

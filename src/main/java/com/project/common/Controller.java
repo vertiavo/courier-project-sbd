@@ -150,12 +150,12 @@ public class Controller implements Initializable {
                 newButton.setVisible(true);
                 deleteButton.setVisible(true);
                 setNewButtonClickEvent();
-                setDeletButtonClickEvent();
+                setDeleteButtonClickEvent();
             }
         });
     }
 
-    private void setDeletButtonClickEvent() {
+    private void setDeleteButtonClickEvent() {
        deleteButton.setOnAction(a->{
          String pk=  helper.getTable().getSelectionModel().getSelectedItem().toString();
          helper.delete(pk);

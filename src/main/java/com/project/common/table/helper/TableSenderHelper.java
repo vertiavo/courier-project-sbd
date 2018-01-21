@@ -86,7 +86,6 @@ public class TableSenderHelper implements TableHelper<Sender> {
         TableColumn offerTypeCol = new TableColumn("Offer type");
         offerTypeCol.setMinWidth(100);
         offerTypeCol.setCellValueFactory(new PropertyValueFactory<Sender, String>("offerType"));
-        // TODO dropdown for choosing desired offerType
 
         TableColumn nipCol = new TableColumn("NIP");
         nipCol.setMinWidth(50);
