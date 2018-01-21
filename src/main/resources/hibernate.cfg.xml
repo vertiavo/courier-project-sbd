@@ -21,7 +21,7 @@
             <!--username-->
             sbd_inf_ps7_9
         </property>
-
+        <property name="show_sql">true</property>
         <property name = "hibernate.connection.password">
             <!--password-->
             sbd_inf_ps7_9

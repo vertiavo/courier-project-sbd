@@ -27,7 +27,7 @@ public class Sender implements Serializable {
     private String address;
 
     @ManyToOne
-    @JoinColumn(name = "OFFERTYPE", referencedColumnName = "OFFERTYPE")
+    @JoinColumn(name = "OFFERTYPE")
     private Offer offerType;
 
     @Column(name = "NAME")
@@ -48,6 +48,7 @@ public class Sender implements Serializable {
         this.name = name;
         this.surname = surname;
         this.nip = nip;
+
     }
 
     public Integer getIdSender() {

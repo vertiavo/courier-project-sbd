@@ -111,7 +111,7 @@ public class Controller implements Initializable {
                 case OFFER:
                     helper = new TableOfferHelper(table);
                     fields.clear();
-                    fields.addAll(Arrays.asList("Offer type", "Discount"));
+                    fields.addAll(Arrays.asList("Type", "Discount"));
                     break;
                 case ORDER_INFO:
                     helper = new TableOrderInfoHelper(table);
@@ -158,9 +158,10 @@ public class Controller implements Initializable {
         List<String> inputValues = fields;
         newButton.setOnAction(e -> {
             FormDialog fd=new FormDialog();
-            fd.display(inputValues);
-            if (!inputValues.isEmpty()) {
-                helper.add(inputValues);
+            List<String>params=fd.display(inputValues);
+
+            if (!params.isEmpty()) {
+                helper.add(params);
             }
         });
     }

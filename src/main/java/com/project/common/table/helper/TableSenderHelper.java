@@ -2,8 +2,11 @@ package com.project.common.table.helper;
 
 import com.project.common.util.AlertDialog;
 import com.project.common.util.FieldValidator;
+import com.project.dao.OfferDao;
 import com.project.dao.SenderDao;
+import com.project.dao.jpa.OfferJpaDao;
 import com.project.dao.jpa.SenderJpaDao;
+import com.project.dto.Offer;
 import com.project.dto.Sender;
 
 import javafx.collections.FXCollections;
@@ -107,7 +110,12 @@ public class TableSenderHelper implements TableHelper<Sender> {
 
     @Override
     public void add(List<String> items) {
-        throw new UnsupportedOperationException("Adding new Sender not supported!");
+        OfferDao offerDao = new OfferJpaDao();
+        Offer offer= offerDao.findById(items.get(3));
+
+        Sender newSender=new Sender(items.get(0), items.get(1), items.get(2), offer ,Integer.valueOf(items.get(4)));
+        senderDao.save(newSender);
+        data.add(newSender);
     }
 
     private void edit(Sender sender) {

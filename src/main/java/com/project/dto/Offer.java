@@ -1,10 +1,9 @@
 package com.project.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "OFFER")
@@ -18,6 +17,10 @@ public class Offer implements Serializable {
 
     @Column(name = "DISCOUNT")
     private Integer discount;
+
+    @OneToMany()
+    private Set<Sender> senderSet = new HashSet<Sender>(
+            0);
 
     public Offer() {
     }
@@ -64,6 +67,14 @@ public class Offer implements Serializable {
     @Override
     public String toString() {
         return offerType;
+    }
+
+    public Set<Sender> getSenderSet() {
+        return senderSet;
+    }
+
+    public void setSenderSet(Set<Sender> senderSet) {
+        this.senderSet = senderSet;
     }
 
 }

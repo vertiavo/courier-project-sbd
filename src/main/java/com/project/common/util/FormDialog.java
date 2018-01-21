@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -26,11 +27,11 @@ import static com.sun.deploy.config.JREInfo.getAll;
 
 public class FormDialog {
     private static List<String>listOfEntitiesNames;
-
     public FormDialog() {
     }
 
-    public  void display(List<String> fields){
+    public  List<String> display(List<String> fields){
+        LinkedList<String>params=new LinkedList<>();
         initEnitiesNames();
 
         Stage window = new Stage();
@@ -70,7 +71,24 @@ public class FormDialog {
         Button addButton = new Button("Add");
         addButton.setOnAction(e -> {
             fields.clear();
-            textFields.forEach(field -> fields.add(field.getText()));
+           // textFields.forEach(field -> fields.add(field.getText()));
+            int rows=getRowCount(grid);
+            for (int i=0;i<rows;i++){
+                Node n=getNodeFromGridPane(grid,1,i);
+                if(n instanceof TextField){
+                    params.add(((TextField) n).getText().toString());
+                }
+                else if(n instanceof ComboBox){
+                   ComboBoxProp comboBoxProp=(ComboBoxProp)((ComboBox) n).getValue();
+                   if(comboBoxProp.getId()==-1){
+                       params.add(String.valueOf(comboBoxProp.getInfo()));
+                   }
+                   else{
+                       params.add(String.valueOf(comboBoxProp.getId()));
+                   }
+
+                }
+            }
             window.close();
         });
 
@@ -84,11 +102,17 @@ public class FormDialog {
         hBox.setAlignment(Pos.BOTTOM_RIGHT);
         hBox.getChildren().addAll(addButton, cancelButton);
         grid.add(hBox, 1, rowNum);
-
         window.showAndWait();
-
+        return params;
     }
-
+    private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
+        for (Node node : gridPane.getChildren()) {
+            if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
+                return node;
+            }
+        }
+        return null;
+    }
     private  ComboBox<ComboBoxProp> populateComboBox(ComboBox<ComboBoxProp> cb,String field) {
         switch (field){
             case "Area ID":
@@ -119,7 +143,7 @@ public class FormDialog {
                 OfferDao offerDao = new OfferJpaDao();
                 List<Offer>offerList= offerDao.getAll();
                 ObservableList<ComboBoxProp>offerOL= FXCollections.observableArrayList();
-                offerList.stream().forEach(a->offerOL.add(new ComboBoxProp(0,a.getOfferType())));
+                offerList.stream().forEach(a->offerOL.add(new ComboBoxProp(-1,a.getOfferType())));
                 cb.setItems(offerOL);
                 break;
             case "Package":
@@ -202,5 +226,17 @@ public class FormDialog {
             return info;
         }
     }
-
+    private int getRowCount(GridPane pane) {
+        int numRows = pane.getRowConstraints().size();
+        for (int i = 0; i < pane.getChildren().size(); i++) {
+            Node child = pane.getChildren().get(i);
+            if (child.isManaged()) {
+                Integer rowIndex = GridPane.getRowIndex(child);
+                if(rowIndex != null){
+                    numRows = Math.max(numRows,rowIndex+1);
+                }
+            }
+        }
+        return numRows;
+    }
 }
