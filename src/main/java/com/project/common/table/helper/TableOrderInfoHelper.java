@@ -1,7 +1,7 @@
 package com.project.common.table.helper;
 
-import com.project.dao.OrderInfoDao;
-import com.project.dao.jpa.OrderInfoJpaDao;
+import com.project.dao.*;
+import com.project.dao.jpa.*;
 import com.project.dto.*;
 
 import javafx.collections.FXCollections;
@@ -10,6 +10,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -77,8 +78,33 @@ public class TableOrderInfoHelper implements TableHelper<OrderInfo> {
 
     @Override
     public void add(List<String> items) {
-        OrderInfo orderInfo = new OrderInfo();
-        throw new UnsupportedOperationException("Adding new OrderInfo not supported!");
+        SenderDao senderDao=new SenderJpaDao();
+        Sender sender=senderDao.findById(Integer.valueOf(items.get(0)));
+
+        RecipientDao recipientDao=new RecipientJpaDao();
+        Recipient recipient=recipientDao.findById(Integer.valueOf(items.get(1)));
+
+        CourierDao courierDao=new CourierJpaDao();
+        Courier courier=courierDao.findById(Integer.valueOf(items.get(2)));
+
+        PackageInfoDao packageInfoDao=new PackageInfoJpaDao();
+        PackageInfo packageInfo=packageInfoDao.findById(Integer.valueOf(items.get(3)));
+
+        PaymentDao paymentDao=new PaymentJpaDao();
+        Payment payment=paymentDao.findById(Integer.valueOf(items.get(4)));
+        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+
+        Date orderDate=new Date();
+        try{
+            orderDate=df.parse(items.get(5));
+        }catch(Exception ex){
+            //handle this shit
+        }
+        java.sql.Date orderSqlDate = new java.sql.Date(orderDate.getTime());
+
+        OrderInfo orderInfo = new OrderInfo(sender,recipient,courier,packageInfo,payment,orderSqlDate);
+        orderInfoDao.save(orderInfo);
+        data.add(orderInfo);
     }
 
     private void edit(OrderInfo orderInfo) {

@@ -111,7 +111,7 @@ public class FormDialog {
     }
 
     private boolean checkIfFieldIsDatePicker(String field) {
-        return field.equals("Begin date") || field.equals("End date");
+        return field.equals("Begin date") || field.equals("End date") || field.equals("Order Date");
     }
 
     private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {

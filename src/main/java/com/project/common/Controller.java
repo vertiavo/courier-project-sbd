@@ -116,7 +116,7 @@ public class Controller implements Initializable {
                 case ORDER_INFO:
                     helper = new TableOrderInfoHelper(table);
                     fields.clear();
-                    fields.addAll(Arrays.asList("Sender", "Recipient", "Courier", "Package", "Payment"));
+                    fields.addAll(Arrays.asList("Sender", "Recipient", "Courier", "Package", "Payment","Order Date"));
                     break;
                 case PACKAGE_DIMENSION:
                     helper = new TablePackageDimensionHelper(table);
