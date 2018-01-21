@@ -93,4 +93,16 @@ public class TablePaymentHelper implements TableHelper<Payment> {
         data.remove(payment);
     }
 
+    @Override
+    public void delete(String pk) {
+        Payment payment=paymentDao.findById(Integer.valueOf(pk));
+        paymentDao.delete(payment);
+        data.remove(payment);
+    }
+
+    @Override
+    public TableView getTable() {
+        return paymentTable;
+    }
+
 }

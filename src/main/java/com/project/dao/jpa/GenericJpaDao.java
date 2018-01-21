@@ -51,6 +51,9 @@ public class GenericJpaDao<T, K> implements GenericDao<T, K> {
             session.getTransaction().commit();
             System.out.println("Record removed.");
         }
+        catch (Exception ex){
+            System.out.println(ex.getMessage().toString());
+        }
     }
 
     @Override

@@ -83,4 +83,17 @@ public class TableAreaHelper implements TableHelper<Area> {
         areaDao.delete(area);
         data.remove(area);
     }
+
+    @Override
+    public void delete(String pk) {
+        Area areaToDelete=areaDao.findById(Integer.valueOf(pk));
+        areaDao.delete(areaToDelete);
+        data.remove(areaToDelete);
+    }
+
+    @Override
+    public TableView getTable() {
+        return areaTable;
+    }
+
 }

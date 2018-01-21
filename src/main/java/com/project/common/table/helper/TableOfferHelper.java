@@ -76,4 +76,16 @@ public class TableOfferHelper implements TableHelper<Offer> {
         data.remove(offer);
     }
 
+    @Override
+    public void delete(String pk) {
+        Offer offer=offerDao.findById(pk);
+        offerDao.delete(offer);
+        data.remove(offer);
+    }
+
+    @Override
+    public TableView getTable() {
+        return offerTable;
+    }
+
 }

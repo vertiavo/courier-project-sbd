@@ -121,4 +121,16 @@ public class TableRecipientHelper implements TableHelper<Recipient> {
         data.remove(recipient);
     }
 
+    @Override
+    public void delete(String pk) {
+        Recipient recipient=recipientDao.findById(Integer.valueOf(pk));
+        recipientDao.delete(recipient);
+        data.remove(recipient);
+    }
+
+    @Override
+    public TableView getTable() {
+        return recipientTable;
+    }
+
 }

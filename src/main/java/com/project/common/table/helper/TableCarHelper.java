@@ -123,4 +123,16 @@ public class TableCarHelper implements TableHelper<Car> {
         data.remove(car);
     }
 
+    @Override
+    public void delete(String pk) {
+          Car car=carDao.findById(Integer.valueOf(pk));
+          carDao.delete(car);
+          data.remove(car);
+    }
+
+    @Override
+    public TableView getTable() {
+        return carTable;
+    }
+
 }

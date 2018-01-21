@@ -128,4 +128,16 @@ public class TableSenderHelper implements TableHelper<Sender> {
         data.remove(sender);
     }
 
+    @Override
+    public void delete(String pk) {
+        Sender sender=senderDao.findById(Integer.valueOf(pk));
+        senderDao.delete(sender);
+        data.remove(sender);
+    }
+
+    @Override
+    public TableView getTable() {
+        return senderTable;
+    }
+
 }

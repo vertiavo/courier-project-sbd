@@ -120,4 +120,22 @@ public class TableCourierCarAreaHelper implements TableHelper<CourierCarArea> {
         data.remove(courierCarArea);
     }
 
+    @Override
+    public void delete(String pk) {
+        //TODO
+//        List<CourierCarArea>all=courierCarAreaDao.getAll();
+//        CourierDao cDao=new CourierJpaDao();
+//        Courier courierToFind=cDao.findById(Integer.valueOf(pk));
+//        for (CourierCarArea cc:all)
+//        {
+//          if(cc.getIdCourierCarArea().getIdCourier()==courierToFind){
+//
+//          }
+//        }
+    }
+    @Override
+    public TableView getTable() {
+        return courierCarAreaTable;
+    }
+
 }

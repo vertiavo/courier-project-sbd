@@ -84,4 +84,16 @@ public class TablePackageInfoHelper implements TableHelper<PackageInfo> {
         data.remove(packageInfo);
     }
 
+    @Override
+    public void delete(String pk) {
+        PackageInfo packageInfo=packageInfoDao.findById(Integer.valueOf(pk));
+        packageInfoDao.delete(packageInfo);
+        data.remove(packageInfo);
+    }
+
+    @Override
+    public TableView getTable() {
+        return packageInfoTable;
+    }
+
 }

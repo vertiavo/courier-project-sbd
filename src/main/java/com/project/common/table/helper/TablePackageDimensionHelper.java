@@ -89,4 +89,16 @@ public class TablePackageDimensionHelper implements TableHelper<PackageDimension
         data.remove(packageDimension);
     }
 
+    @Override
+    public void delete(String pk) {
+        PackageDimension packageDimension=packageDimensionDao.findById(pk);
+        packageDimensionDao.delete(packageDimension);
+        data.remove(packageDimension);
+    }
+
+    @Override
+    public TableView getTable() {
+        return packageDimensionTable;
+    }
+
 }

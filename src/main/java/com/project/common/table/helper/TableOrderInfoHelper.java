@@ -92,4 +92,16 @@ public class TableOrderInfoHelper implements TableHelper<OrderInfo> {
         data.remove(orderInfo);
     }
 
+    @Override
+    public void delete(String pk) {
+        OrderInfo orderInfo=orderInfoDao.findById(Integer.valueOf(pk));
+        orderInfoDao.delete(orderInfo);
+        data.remove(orderInfo);
+    }
+
+    @Override
+    public TableView getTable() {
+        return orderInfoTable;
+    }
+
 }

@@ -120,4 +120,16 @@ public class TableCourierHelper implements TableHelper<Courier> {
         data.remove(courier);
     }
 
+    @Override
+    public void delete(String pk) {
+        Courier courier=courierDao.findById(Integer.valueOf(pk));
+        courierDao.delete(courier);
+        data.remove(courier);
+    }
+
+    @Override
+    public TableView getTable() {
+        return courierTable;
+    }
+
 }
