@@ -157,7 +157,8 @@ public class Controller implements Initializable {
     private void setNewButtonClickEvent() {
         List<String> inputValues = fields;
         newButton.setOnAction(e -> {
-            FormDialog.display(inputValues);
+            FormDialog fd=new FormDialog();
+            fd.display(inputValues);
             if (!inputValues.isEmpty()) {
                 helper.add(inputValues);
             }

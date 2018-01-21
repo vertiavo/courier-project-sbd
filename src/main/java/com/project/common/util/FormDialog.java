@@ -1,25 +1,37 @@
 package com.project.common.util;
 
+import com.project.dao.*;
+import com.project.dao.jpa.*;
+import com.project.dto.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-public class FormDialog {
+import static com.sun.deploy.config.JREInfo.getAll;
 
-    private FormDialog() {
+public class FormDialog {
+    private static List<String>listOfEntitiesNames;
+
+    public FormDialog() {
     }
 
-    public static void display(List<String> fields){
+    public  void display(List<String> fields){
+        initEnitiesNames();
 
         Stage window = new Stage();
 
@@ -42,9 +54,16 @@ public class FormDialog {
         for (String field : fields) {
             Label label = new Label(field);
             grid.add(label, 0, rowNum);
-            TextField textField = new TextField();
-            grid.add(textField, 1, rowNum);
-            textFields.add(textField);
+            if(checkIfFieldIsEntity(field)){
+                ComboBox<ComboBoxProp>cb= new ComboBox<>();
+                cb=populateComboBox(cb,field);
+                grid.add(cb,1,rowNum);
+            }
+            else{
+                TextField textField = new TextField();
+                grid.add(textField, 1, rowNum);
+                textFields.add(textField);
+            };
             rowNum++;
         }
 
@@ -64,10 +83,124 @@ public class FormDialog {
         HBox hBox = new HBox(10);
         hBox.setAlignment(Pos.BOTTOM_RIGHT);
         hBox.getChildren().addAll(addButton, cancelButton);
-        grid.add(hBox, 1, 4);
+        grid.add(hBox, 1, rowNum);
 
         window.showAndWait();
 
+    }
+
+    private  ComboBox<ComboBoxProp> populateComboBox(ComboBox<ComboBoxProp> cb,String field) {
+        switch (field){
+            case "Area ID":
+                AreaDao areaDao = new AreaJpaDao();
+                List<Area>areaList=areaDao.getAll();
+                ObservableList<ComboBoxProp>areaOl=FXCollections.observableArrayList();
+                areaList.stream().forEach(a->areaOl.addAll(new ComboBoxProp(a.getIdArea(),a.getName())));
+                cb.setItems(areaOl);
+                break;
+
+            case "Car ID":
+                CarDao carDao = new CarJpaDao();
+                List<Car>carList=carDao.getAll();
+                ObservableList<ComboBoxProp>carOL=FXCollections.observableArrayList();
+                carList.stream().forEach(c->carOL.add(new ComboBoxProp(c.getIdCar(),c.getModel())));
+                cb.setItems(carOL);
+                break;
+
+            case "Courier ID":
+            case "Courier":
+                CourierDao courierDao = new CourierJpaDao();
+                List<Courier>courierList=courierDao.getAll();
+                ObservableList<ComboBoxProp>courierOL=FXCollections.observableArrayList();
+                courierList.stream().forEach(c->courierOL.add(new ComboBoxProp(c.getIdCourier(),c.getSurname())));
+                cb.setItems(courierOL);
+                break;
+            case "Offer type":
+                OfferDao offerDao = new OfferJpaDao();
+                List<Offer>offerList= offerDao.getAll();
+                ObservableList<ComboBoxProp>offerOL= FXCollections.observableArrayList();
+                offerList.stream().forEach(a->offerOL.add(new ComboBoxProp(0,a.getOfferType())));
+                cb.setItems(offerOL);
+                break;
+            case "Package":
+                PackageInfoDao packageInfoDao = new PackageInfoJpaDao();
+                List<PackageInfo>packageList=packageInfoDao.getAll();
+                ObservableList<ComboBoxProp>packageOL=FXCollections.observableArrayList();
+                packageList.stream().forEach(p->packageOL.add(new ComboBoxProp(p.getIdPackage(),p.getVulnerability())));
+                cb.setItems(packageOL);
+                break;
+            case "Payment":
+                PaymentDao paymentDao = new PaymentJpaDao();
+                List<Payment>paymentList=paymentDao.getAll();
+                ObservableList<ComboBoxProp>paymentOL=FXCollections.observableArrayList();
+                paymentList.stream().forEach(p->paymentOL.add(new ComboBoxProp(p.getIdPayment(),p.getType())));
+                cb.setItems(paymentOL);
+                break;
+            case "Recipient":
+                RecipientDao recipientDao = new RecipientJpaDao();
+                List<Recipient>recipientList=recipientDao.getAll();
+                ObservableList<ComboBoxProp>recipientOL=FXCollections.observableArrayList();
+                recipientList.stream().forEach(r->recipientOL.add(new ComboBoxProp(r.getIdRecipient(),r.getSurname())));
+                cb.setItems(recipientOL);
+                break;
+            case "Sender":
+                SenderDao senderDao = new SenderJpaDao();
+                List<Sender>senderList=senderDao.getAll();
+                ObservableList<ComboBoxProp>senderOL=FXCollections.observableArrayList();
+                senderList.stream().forEach(c->senderOL.add(new ComboBoxProp(c.getIdSender(),c.getSurname())));
+                cb.setItems(senderOL);
+                break;
+        }
+
+        cb.setConverter(new StringConverter<ComboBoxProp>() {
+
+            @Override
+            public String toString(ComboBoxProp object) {
+                return "Id:"+object.getId()+",value: "+object.getInfo();
+            }
+
+            @Override
+            public ComboBoxProp fromString(String string) {
+                return cb.getItems().stream().filter(ap ->
+                        ap.getInfo().equals(string)).findFirst().orElse(null);
+            }
+        });
+        return cb;
+    }
+
+    private static void initEnitiesNames() {
+        listOfEntitiesNames=new ArrayList<String>();
+        listOfEntitiesNames.add("Courier");
+        listOfEntitiesNames.add("Offer type");
+        listOfEntitiesNames.add("Payment");
+        listOfEntitiesNames.add("Recipient");
+        listOfEntitiesNames.add("Sender");
+        listOfEntitiesNames.add("Car ID");
+        listOfEntitiesNames.add("Courier ID");
+        listOfEntitiesNames.add("Area ID");
+        listOfEntitiesNames.add("Package");
+
+    }
+
+    private static boolean checkIfFieldIsEntity(String field) {
+        return listOfEntitiesNames.stream().anyMatch(str -> str.trim().equals(field));
+    }
+
+    private class ComboBoxProp{
+        private int id;
+        private String info;
+        public ComboBoxProp(int id,String info){
+            this.id=id;
+            this.info=info;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getInfo() {
+            return info;
+        }
     }
 
 }
