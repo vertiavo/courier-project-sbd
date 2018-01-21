@@ -78,11 +78,16 @@ public class FormDialog {
                     params.add(((TextField) n).getText().toString());
                 } else if (n instanceof ComboBox) {
                     ComboBoxProp comboBoxProp = (ComboBoxProp) ((ComboBox) n).getValue();
-                    if (comboBoxProp.getId() == -1) {
-                        params.add(String.valueOf(comboBoxProp.getInfo()));
+                    if (comboBoxProp instanceof ComboBoxPropWithoutId) {
+                        params.add(comboBoxProp.getInfo());
                     } else {
-                        params.add(String.valueOf(comboBoxProp.getId()));
+                        if (comboBoxProp.getId() == -1) {
+                            params.add(String.valueOf(comboBoxProp.getInfo()));
+                        } else {
+                            params.add(String.valueOf(comboBoxProp.getId()));
+                        }
                     }
+
 
                 } else if (n instanceof DatePicker) {
                     params.add(((DatePicker) n).getValue().toString());
