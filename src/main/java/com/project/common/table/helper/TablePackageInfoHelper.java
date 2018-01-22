@@ -53,10 +53,9 @@ public class TablePackageInfoHelper implements TableHelper<PackageInfo> {
             }
         });
 
-        TableColumn categoryCol = new TableColumn("Category");
+        TableColumn categoryCol = new TableColumn("Package dimension");
         categoryCol.setMinWidth(100);
         categoryCol.setCellValueFactory(new PropertyValueFactory<PackageInfo, String>("category"));
-        // TODO dropdown for choosing desired category
 
         packageInfoTable.setItems(data);
         packageInfoTable.getColumns().addAll(idCol, vulnerabilityCol, categoryCol);

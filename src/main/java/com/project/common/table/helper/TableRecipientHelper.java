@@ -102,11 +102,7 @@ public class TableRecipientHelper implements TableHelper<Recipient> {
 
     @Override
     public void add(List<String> items) {
-        Recipient recipient = new Recipient(
-                items.get(0),
-                items.get(1),
-                items.get(2),
-                Integer.valueOf(items.get(3)));
+        Recipient recipient = new Recipient(items.get(0), items.get(1), items.get(2), Integer.valueOf(items.get(3)));
         recipientDao.save(recipient);
         data.add(recipient);
     }
@@ -123,7 +119,7 @@ public class TableRecipientHelper implements TableHelper<Recipient> {
 
     @Override
     public void delete(String pk) {
-        Recipient recipient=recipientDao.findById(Integer.valueOf(pk));
+        Recipient recipient = recipientDao.findById(Integer.valueOf(pk));
         recipientDao.delete(recipient);
         data.remove(recipient);
     }

@@ -126,7 +126,7 @@ public class Controller implements Initializable {
                 case PACKAGE_INFO:
                     helper = new TablePackageInfoHelper(table);
                     fields.clear();
-                    fields.addAll(Arrays.asList("Vulnerability", "Category"));
+                    fields.addAll(Arrays.asList("Vulnerability", "Package dimension"));
                     break;
                 case PAYMENT:
                     helper = new TablePaymentHelper(table);

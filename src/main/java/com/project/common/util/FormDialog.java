@@ -63,7 +63,7 @@ public class FormDialog {
                 grid.add(textField, 1, rowNum);
                 textFields.add(textField);
             }
-            ;
+
             rowNum++;
         }
 
@@ -74,6 +74,7 @@ public class FormDialog {
             int rows = getRowCount(grid);
             for (int i = 0; i < rows; i++) {
                 Node n = getNodeFromGridPane(grid, 1, i);
+
                 if (n instanceof TextField) {
                     params.add(((TextField) n).getText().toString());
                 } else if (n instanceof ComboBox) {
@@ -171,7 +172,7 @@ public class FormDialog {
                 paymentList.stream().forEach(p -> paymentOL.add(new ComboBoxProp(p.getIdPayment(), p.getType())));
                 cb.setItems(paymentOL);
                 break;
-            case "Category":
+            case "Package dimension":
                 PackageDimensionDao packageDimensionDao = new PackageDimensionJpaDao();
                 List<PackageDimension> packageDimensionList = packageDimensionDao.getAll();
                 ObservableList<ComboBoxProp> packageDimensionOL = FXCollections.observableArrayList();
@@ -195,7 +196,7 @@ public class FormDialog {
                 cb.setItems(senderOL);
                 break;
         }
-
+        cb.setPrefWidth(150);
         cb.setConverter(new StringConverter<ComboBoxProp>() {
 
             @Override
@@ -223,7 +224,7 @@ public class FormDialog {
         listOfEntitiesNames.add("Courier ID");
         listOfEntitiesNames.add("Area ID");
         listOfEntitiesNames.add("Package");
-        listOfEntitiesNames.add("Category");
+        listOfEntitiesNames.add("Package dimension");
 
     }
 
